@@ -40,23 +40,5 @@
   </div>
 </nav>
 
-<div class="container mt-2">
-  <div class="row">
-    <div class="col-lg-2">
-
-      <button class="btn btn-info my-2 my-sm-0" id="NavButton">Filter</button>
-    </div>
-    <div class="col-lg-6 offset-lg-4">
-      <form class="form-inline my-2 my-lg-0 justify-content-end">
-        <div class="input-group">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 </body>
 </html>
