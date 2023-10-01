@@ -39,6 +39,4 @@
     <a class="flex-sm-fill text-sm-right" href="#"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Register</button></a>
   </div>
 </nav>
-
-</body>
 </html>
