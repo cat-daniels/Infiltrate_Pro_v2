@@ -6,8 +6,8 @@
     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">
-    <img src="images/logo.png" width="250" height="65" class="d-inline-block align-top" alt="">
+  <a class="navbar-brand" href="index.php">
+    <img src="../images/logo.png" width="250" height="65" class="d-inline-block align-top" alt="">
   </a>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -29,13 +29,13 @@
 
     <div class="cart-icon">
       <a href="#" class="navbar-brand">
-        <img src="images/Vector.png" width="32" height="32" alt="Cart">
+        <img src="../images/Vector.png" width="32" height="32" alt="Cart">
         <span class="badge">0</span>
         <span class="displaytext">$0.00</span>
       </a>
     </div>
 
-    <a class="flex-sm-fill text-sm-right" href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Login</button></a>
+    <a class="flex-sm-fill text-sm-right" href="auth/login.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Login</button></a>
     <a class="flex-sm-fill text-sm-right" href="#"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Register</button></a>
   </div>
 </nav>

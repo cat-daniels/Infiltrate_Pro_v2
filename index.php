@@ -1,55 +1,39 @@
-<?php 
-include_once("includes/header.php");
-include_once("includes/nav.php");
-include_once("includes/footer.php");
-
-?> 
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="style/animationstyle.css">
+</head>
 <body>
-<?php
-// Connection works but images don't temp file will delete when better structure is found
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "infiltratepro"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT * FROM productdb";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<div>";
-        echo "<h2>" . $row["prodName"] . "</h2>";
-        echo "<p>Price: $" . $row["prodPrice"] . "</p>";
-        echo "<p>Description: " . $row["prodDesc"] . "</p>";
-        echo "<p>Keywords: " . $row["keywords"] . "</p>";
-        echo "<p>Categories: " . $row["categories"] . "</p>";
-        echo "<p>Featured: " . ($row["isFeatured"] ? "Yes" : "No") . "</p>";
-
-        // Display the image if available
-        if (!empty($row["prodImage"])) {
-            $imageData = base64_encode($row["prodImage"]);
-            echo '<img src="data:image/jpeg;base64,' . $imageData . '" alt="Product Image">';
-        } else {
-            echo "No image available";
-        }
-
-        echo "</div>";
-    }
-} else {
-    echo "No products found.";
-}
-
-$conn->close();
-?>
+<div class="camera-lens">
+        <div class="lens-inner"></div>
+        <div class="shutter"></div>
+    </div>
+<div class="homepage">
+        <div class="center-content">
+            
+            <h2>Welcome to Infiltrate Pro</h2>
+            <div class="center-button">
+                <h3>Infiltrate Pro is a purposely vulnerable e-commerce store</h3> <br>
+                <h4>This tool is to be used for learning purposes only</h4>
+                <h4>Click below to begin</h4> 
+                <a href="default/homepage.php"><button>Begin</button></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="boxes">
+        <ul class="fire-fly">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 </body>
 </html>
