@@ -9,7 +9,7 @@ include_once("../includes/footer.php");
 <html lang="en">
 <body>
 <?php
-
+// if the user is not logged in(include nav) else include usernav
 ?>
 </body>
 </html>

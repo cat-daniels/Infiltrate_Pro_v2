@@ -34,9 +34,9 @@
         <span class="displaytext">$0.00</span>
       </a>
     </div>
-
-    <a class="flex-sm-fill text-sm-right" href="auth/login.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Login</button></a>
-    <a class="flex-sm-fill text-sm-right" href="#"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Register</button></a>
+      <!--In order to get the correct path we put the mainpage in default so that it could be accessed by the default nav with ../ -->
+    <a class="flex-sm-fill text-sm-right" href="../auth/login.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Login</button></a>
+    <a class="flex-sm-fill text-sm-right" href="../"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Register</button></a>
   </div>
 </nav>
 </html>

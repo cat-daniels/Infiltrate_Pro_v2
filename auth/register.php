@@ -1,0 +1,1 @@
+<h1>Registration Page success!</h1>
