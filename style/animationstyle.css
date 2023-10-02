@@ -13,7 +13,8 @@ body {
     width: 100%;
     position: absolute;
     text-align: center;
-    top: 45%;
+    top: 40%;
+    z-index: 1;
     transform: translateY(-30%);
 }
 
@@ -188,7 +189,11 @@ body {
     background-color: #191818d4;
     border-radius: 50%;
     position: absolute;
-    z-index: 1;}
+    bottom: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
 
 .lens-inner {
     width: 20px;

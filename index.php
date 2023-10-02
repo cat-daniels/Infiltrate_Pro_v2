@@ -9,12 +9,6 @@
   
     <div class="homepage">
         <div class="center-content">
-        <div class = "camera-lens">
-        <div class="lens-inner">
-        <div class="red-dot">
-        </div>
-        </div>
-    </div>
             <h2>Infiltrate <span style="color: #6DC2FA;">Pro</span></h2> <!-- Added closing </span> tag here -->
             <div class="center-button">
                 <h4>This tool is to be used for learning purposes only</h4>
@@ -33,8 +27,15 @@
             <li></li>
             <li></li>
             <li></li>
-            
         </ul>
     </div>
+
+ 
+    <div class="camera-lens">
+        <div class="lens-inner">
+            <div class="red-dot"></div>
+        </div>
+    </div>
+
 </body>
 </html>
