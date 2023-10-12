@@ -8,6 +8,6 @@ include_once("../includes/footer.php");
 <!DOCTYPE html>
 <html lang="en">
 <body>
-
+<h1>Is this working?</h1>
 </body>
 </html>
