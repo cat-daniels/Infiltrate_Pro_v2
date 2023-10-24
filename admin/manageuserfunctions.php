@@ -62,11 +62,39 @@
             echo "<td>{$user['expiration_date']}</td>";
             echo "<td>{$user['cvv']}</td>";
             echo "<td>" . ($user["isAdmin"] ? "Yes" : "No") . "</td>";
+            echo "<td><button class='btn btn-danger' onclick='deleteUser(\"{$user['uid']}\")'>Delete</button></td>";
             echo "</tr>";
         }
     
         echo '</tbody>';
         echo '</table>';
+    }
+    
+    function deleteUser($uid){
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "infiltratepro"; 
+        
+        $conn = new mysqli($servername, $username, $password, $dbname);
+    
+        if($conn->connect_error){
+            die("Connections failed " . $conn->connect_error);
+        }
+        
+        //this statement here is to prevent from sql injection but will remove at a later date
+        $stmt = $conn->prepare("DELETE FROM users WHERE uid = ?");
+        $stmt->bind_param("s", $uid);
+    
+        if ($stmt->execute()) {
+            echo "User with UID $uid deleted successfully.";
+        } else {
+            echo "Error deleting user: " . $conn->error;
+        }
+    
+        // Close the prepared statement and the database connection
+        $stmt->close();
+        $conn->close();
     }
     
 ?>
