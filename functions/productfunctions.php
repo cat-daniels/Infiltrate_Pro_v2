@@ -39,6 +39,8 @@ if ($result->num_rows > 0) {
         echo '<h5 class="card-title">' . $row['ProductName'] . '</h5>';
         echo '<p class="card-text">Price: $' . $row['Price'] . '</p>';
         echo '<p class="card-text">Description: ' . $row['Description'] . '</p>';
+        echo '<a href="viewmore.php?ProductCode=' . $row['ProductCode'] . '" class="btn btn-primary">View More</a>';
+        echo '<a href="../auth/login.php" class="btn btn-secondary">Add to Cart</a>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

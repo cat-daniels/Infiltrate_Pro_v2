@@ -56,7 +56,7 @@
             echo "<td>{$prod['Keywords']}</td>";
             echo "<td>{$prod['Category']}</td>";
             echo "<td>{$prod['Featured']}</td>";
-            echo "<td><button class='btn btn-info' onclick='deleteprod(\"{$prod['ProductCode']}\")'>view</button></td>";
+            echo "<td><a href='vieweditproduct.php?productCode={$prod['ProductCode']}' class='btn btn-info'>View</a></td>";
             echo "<td><button class='btn btn-danger' onclick='deleteprod(\"{$prod['ProductCode']}\")'>Delete</button></td>";
             echo "</tr>";
         }
