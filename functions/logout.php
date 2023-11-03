@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 
 session_start();
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['uid'])) {
     session_unset();
     session_destroy();
     header("Location: ../default/homepage.php");

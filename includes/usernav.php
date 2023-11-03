@@ -23,7 +23,7 @@
       <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact Us</button></a>
       </li>
       <li class="nav-item">
-      <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact Us</button></a>
+      <a href="../users/useraccount.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">My Account</button></a>
       </li>
     </ul>
 
@@ -35,7 +35,6 @@
       </a>
     </div>
     <!-- In order to get the correct path we put the main page in default so that it could be accessed by the default nav with ../ -->
-    <a class="flex-sm-fill text-sm-right" href="../auth/login.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Login</button></a>
-    <a class="flex-sm-fill text-sm-right" href="../"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Register</button></a>
+    <a class="flex-sm-fill text-sm-right" href="../functions/logout.php"><button class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</button></a>
   </div>
 </nav>

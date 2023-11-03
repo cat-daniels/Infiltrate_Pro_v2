@@ -27,14 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $user_data = $result->fetch_assoc();
         
+        // this is so that you can get the unique ID of the user and display orders cust details etc.
+        $_SESSION["uid"] = $user_data['uid'];
+
+
         // Check if the user is an admin
         if ($user_data['isAdmin'] == true) {
             // If admin, redirect to admin dashboard
             $_SESSION["user_email"] = $email;
+           
             header("Location: ../admin/admindashboard.php");
         } else {
             // If not admin, redirect to user dashboard
             $_SESSION["user_email"] = $email;
+            
             header("Location: ../users/userdashboard.php");
         }
 
