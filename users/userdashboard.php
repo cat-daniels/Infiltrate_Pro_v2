@@ -1,5 +1,12 @@
 <?php include_once("../includes/usernav.php");
 include_once("../includes/header.php"); 
-include_once("../includes/footer.php") 
+
+
+//functions
+include_once("../functions/productfunctions.php");
 ?>
-<h1>userdashboard worked</h1>
+<body>
+    <?php
+    displayproductincardloggedin();?>
+</body>
+<?php include_once("../includes/footer.php");?>
