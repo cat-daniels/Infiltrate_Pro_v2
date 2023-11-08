@@ -1,8 +1,13 @@
-<?php
+<?php include_once("../includes/usernav.php");
+include_once("../includes/header.php"); 
 
-//Functions
+
+//functions
 include_once("../functions/productfunctions.php");
-
+include_once("../functions/cartfunctions.php");
+?>
+<body>
+    <?php
 // This will grab the product code from the url check the db and display that product
 if (isset($_GET['ProductCode'])) {
     $productCode = $_GET['ProductCode'];
@@ -71,6 +76,7 @@ if (isset($_GET['ProductCode'])) {
 } else {
     echo "Product Code not provided.";
 }?>
+
 <form method="post" action="processreview.php">
     <label for="rating">Rating:</label>
     <select name="rating">
@@ -87,3 +93,6 @@ if (isset($_GET['ProductCode'])) {
     <input type="hidden" name="ProductCode" value="<?php echo $_GET['ProductCode']; ?>">
     <input type="submit" name="submit" value="Submit Review">
 </form>
+
+</body>
+<?php include_once("../includes/footer.php");?>
