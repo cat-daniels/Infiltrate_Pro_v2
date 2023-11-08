@@ -18,19 +18,19 @@
         <a href="../help/helpdashboard.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Infiltrate Help</button></a>
       </li>
       <li class="nav-item">
-        <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
+        <a href="../default/homepage.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
       </li>
       <li class="nav-item">
-        <button class="btn btn-info my-2 my-sm-0" id="NavButton">Categories</button>
+      <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Categories</button></a>
         <!-- Add dropdown here -->
       </li>
       <li class="nav-item">
-        <button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact us</button>
+      <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact us</button></a>
       </li>
     </ul>
 
     <div class="cart-icon">
-      <a href="#" class="navbar-brand">
+      <a href="../auth/login.php" class="navbar-brand">
         <img src="../images/Vector.png" width="32" height="32" alt="Cart">
         <span class="badge">0</span>
         <span class="displaytext">$0.00</span>

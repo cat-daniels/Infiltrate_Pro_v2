@@ -4,6 +4,7 @@ include_once("../includes/header.php");
 
 //functions
 include_once("../functions/productfunctions.php");
+include_once("../functions/cartfunctions.php");
 ?>
 <body>
     <?php

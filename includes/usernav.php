@@ -28,7 +28,7 @@
     </ul>
 
     <div class="cart-icon">
-      <a href="#" class="navbar-brand">
+      <a href="../cart/viewcart.php" class="navbar-brand">
         <img src="../images/Vector.png" width="32" height="32" alt="Cart">
         <span class="badge">0</span>
         <span class="displaytext">$0.00</span>
