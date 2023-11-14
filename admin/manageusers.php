@@ -6,7 +6,9 @@ include_once("../includes/header.php");
 include_once("manageuserfunctions.php"); 
 ?>
 <body>
-    <?php getUsers();
+    <?php
+    //button to add more users
+    getUsers();
     ?>
 </body>
 <?php // footer 

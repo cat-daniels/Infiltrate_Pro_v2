@@ -6,7 +6,9 @@ include_once("../includes/header.php");
 include_once("manageproductfunctions.php"); 
 ?>
 <body>
-    <?php getProducts();
+    <?php 
+    //button to add more products
+    getProducts();
     ?>
 </body>
 <?php // footer 
