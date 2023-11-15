@@ -24,7 +24,7 @@
         <a href="../UserPages/manageProducts.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Products</button></a>
       </li>
       <li class="nav-item">
-        <a href="../UserPages/manageProducts.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
+        <a href="../UserPages/manageOrders.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
       </li>
       <li class="nav-item">
       <a href="../Functions/authfunctions.php?logout=true" class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</a>

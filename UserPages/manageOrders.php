@@ -11,7 +11,17 @@ displayNavbar();
 include_once("../Functions/productfunctions.php");
 ?>
 <body>
-<h1>orders</h1>
+<?php
+Checkaccesslevel();
+
+if (Checkaccesslevel()==1){
+   echo "logged in as user showing orders user"; 
+}elseif(Checkaccesslevel()==2){
+    echo "logged in as Admin showing orders Admin";
+}else{
+    header("../Pages/login.php");
+}
+?>
 </body>
 
 <?php include_once("../Components/footer.php"); ?>

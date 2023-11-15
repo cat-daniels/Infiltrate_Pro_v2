@@ -24,24 +24,38 @@ function displayNavbar() {
         $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
 
         if ($isAdmin) {
-            // Debug: 
-            echo "Admin Navbar"; 
+   
 
             // Include admin navbar if user is admin
             include_once("../Components/adminnav.php");
         } else {
-            // Debug: 
-            echo "User Navbar"; 
-
+           
             // Include user navbar if user is not admin
             include_once("../Components/usernav.php");
         }
     } else {
-        // Debug: 
-        echo "Default Navbar"; 
-
+        
         // Include default navbar if user is not logged in
         include_once("../Components/nav.php");
     }
 }
+
+function Checkaccesslevel() {
+    $access_level = 0; // Default access level for not logged in users
+
+    if (isset($_SESSION["session_token"])) {
+        $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+
+        if ($isAdmin) {
+            // if the user is an admin access level is 2
+            $access_level = 2;
+        } else {
+            // if the user is a normal user access level is 1
+            $access_level = 1;
+        }
+    }
+
+    return $access_level;
+}
+
 ?>
