@@ -45,7 +45,7 @@
       </a>
     </div>
     <!-- In order to get the correct path we put the main page in default so that it could be accessed by the default nav with ../ -->
-    <a href="../Functions/authfunctions.php?logout=true" class="btn btn-info my-2 my-sm-0" id="NavButton">Logout</a>
+    <a href="../Functions/authfunctions.php?logout=true" class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</a>
 
 
 </nav>

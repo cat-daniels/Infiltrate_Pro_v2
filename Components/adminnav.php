@@ -27,7 +27,7 @@
         <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
       </li>
       <li class="nav-item">
-        <a href="../functions/logout.php"><button class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</button></a>
+      <a href="../Functions/authfunctions.php?logout=true" class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</a>
       </li>
 </ul>
 </nav>
