@@ -3,7 +3,9 @@
 <head>
 </head>
 <body>
-
+<?php
+include_once("../Functions/cartfunctions.php")
+?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
@@ -20,7 +22,7 @@
         <a href="../Pages/helpdashboard.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Infiltrate Help</button></a>
       </li>
       <li class="nav-item">
-        <a href="../Pages/Shop.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
+        <a href="../Pages/homepage.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
       </li>
       <li class="nav-item">
       <a href="../Pages/Categories.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Categories</button></a>
@@ -41,10 +43,11 @@
     </ul>
 
     <div class="cart-icon">
-      <a href="../Pages/login.php" class="navbar-brand">
+      <a href="../Pages/cart.php" class="navbar-brand">
         <img src="../images/Vector.png" width="32" height="32" alt="Cart">
-        <span class="badge">0</span>
-        <span class="displaytext">$0.00</span>
+        <span class="badge"><?php echo getTotalItemsInCart(); ?></span>
+        <span class="displaytext">$<?php echo getTotalPriceOfCart(); ?></span>
+    </a>
       </a>
     </div>
     <!-- In order to get the correct path we put the main page in default so that it could be accessed by the default nav with ../ -->

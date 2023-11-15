@@ -1,6 +1,7 @@
 <?php
 include_once("../Utils/database.php");
 include_once("../Utils/sessionconfig.php");
+include_once("cartfunctions.php");
 
 function displayProducts() {
     sessioncheck();
@@ -9,6 +10,24 @@ function displayProducts() {
     $sql = "SELECT * FROM products WHERE Featured = 1";
     $result = $conn->query($sql);
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addToCartBtn'])) {
+        // Retrieve data from the form
+        $productCode = $_POST['productCode'];
+        $productName = $_POST['productName'];
+        $productPrice = $_POST['productPrice'];
+        $quantity = 1; 
+        $totalPrice = $productPrice * $quantity; // Calculate total price
+    
+        // Add the product to the cart
+        $addedToCart = addToCart($productCode, $productName, $quantity, $productPrice, $totalPrice, $conn);
+    
+        // Check if the product was added successfully to the cart
+        if ($addedToCart) {
+            echo '<div class="alert alert-success" role="alert">Product added to cart successfully!</div>';
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Failed to add product to cart. Please try again.</div>';
+        }
+    }
     if ($result->num_rows > 0) {
         $productsCounter = 0;
 
@@ -93,6 +112,8 @@ function displayAllProducts(){
 
     // Display the user data using the displayUsers function
     displayProductsTable($prodArray);
+
+    
 }
 
 function displayProductsTable($prodArray) {

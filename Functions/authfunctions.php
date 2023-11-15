@@ -69,16 +69,19 @@ function LoginAccount($email, $password){
 
         // Set session variables
         $_SESSION["session_token"] = $session_token;
+        $_SESSION["uid"] = $uid;
 
         if ($user_data['isAdmin'] == true) {
             // here we have to set isAdmin to true so we can carry it throughout the application
             $_SESSION["isAdmin"] = true;
+            $_SESSION["uid"] = $uid;
             // Redirect to admin dashboard
             header("Location: ../Dashboards/admindashboard.php");
             exit();
         } else {
             // here we have to set isAdmin to false so that the user is set to normal user
             $_SESSION["isAdmin"] = false;
+            $_SESSION["uid"] = $uid;
             // Redirect to user dashboard or homepage
             header("Location: ../Pages/homepage.php");
             exit();
