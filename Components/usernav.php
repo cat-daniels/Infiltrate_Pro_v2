@@ -3,6 +3,8 @@
 <head>
 </head>
 <body>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +30,11 @@
       <li class="nav-item">
       <a href="../Pages/Contact.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact us</button></a>
       </li>
+
+      <li class="nav-item">
+      <a href="../Dashboards/userdashboard.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">My Account</button></a>
+      </li>
+
     </ul>
 
     <div class="cart-icon">
@@ -38,8 +45,8 @@
       </a>
     </div>
     <!-- In order to get the correct path we put the main page in default so that it could be accessed by the default nav with ../ -->
-    <form method="post" action="../Functions/authfunctions.php">
-  <button type="submit" name="logout" class="btn btn-info my-2 my-sm-0" id="NavButton">Logout</button>
-</form>
+    <a href="../Functions/authfunctions.php?logout=true" class="btn btn-info my-2 my-sm-0" id="NavButton">Logout</a>
+
+
 </nav>
 </html>

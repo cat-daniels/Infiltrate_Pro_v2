@@ -2,6 +2,7 @@
 <?php 
 include_once("../public/header.php");
 include_once("../Utils/database.php");
+include_once("../Utils/sessionconfig.php");
 //functions
 
 displayNavbar();

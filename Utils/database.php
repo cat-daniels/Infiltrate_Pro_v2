@@ -18,7 +18,6 @@ function connectdb(){
 }
 
 function displayNavbar() {
-    session_start();
 
     // Check if the user is logged in
     if (isset($_SESSION["session_token"])) {
@@ -35,8 +34,5 @@ function displayNavbar() {
         // Include default navbar if user is not logged in
         include_once("../Components/nav.php");
     }
-}
-function sessioncheck() {
-    return isset($_SESSION['session_token']);
 }
 ?>

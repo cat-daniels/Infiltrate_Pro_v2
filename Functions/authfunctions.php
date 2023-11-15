@@ -1,8 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include_once("../Utils/database.php");
+include_once("../Utils/sessionconfig.php");
+
 
 function RegisterAccount(){
-    session_start();
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fname = $_POST["fname"];
@@ -44,7 +49,7 @@ function RegisterAccount(){
 };
 
 function LoginAccount($email, $password){
-    session_start();
+    
 
     $conn = connectdb();
     
@@ -84,20 +89,18 @@ function LoginAccount($email, $password){
 };
 
 
-function logout() {
-    // Clear all session variables
-    $_SESSION = array();
-
-    // Destroy the session
-    session_destroy();
-
-    // Redirect to the login page or any other appropriate page after logout
-    header("Location: ../Pages/login.php");
-    exit();
-}
-
-// Check if the logout action is triggered
-if (isset($_POST['logout'])) {
+if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
     logout();
 }
-?>
+
+function logout() {
+    // Unset all session values
+    $_SESSION = array();
+    
+    // Destroy the session
+    session_destroy();
+    
+    // Redirect to the login page or any other appropriate page after logout
+    header('Location: ../Pages/login.php');
+    exit();
+}?>
