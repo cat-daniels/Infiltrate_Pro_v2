@@ -1,11 +1,11 @@
 <html lang="en">
-<?php 
-include_once("../Public/header.php");
-include_once("../Components/nav.php");
+<?php
+include_once("../public/header.php");
+include_once("../Utils/database.php");
+//functions
 
-//Functions
-?> 
-
+displayNavbar();
+?>
 <body>
 <h1>homepage</h1>
 </body>

@@ -71,7 +71,7 @@ function LoginAccount($email, $password){
             header("Location: ../Dashboards/admindashboard.php");
         } else {
             // If not admin, redirect to user dashboard
-            header("Location: ../Dashboards/userdashboard.php");
+            header("Location: ../Pages/homepage.php");
         }
 
         exit();
@@ -83,21 +83,21 @@ function LoginAccount($email, $password){
     $conn->close();
 };
 
-function logout(){function logout() {
-    session_start();
+
+function logout() {
+    // Clear all session variables
     $_SESSION = array();
 
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-    }
-
+    // Destroy the session
     session_destroy();
 
-    // Redirect to the login page or home page after logout
-    header("Location: ../Pages/login.php"); 
-    exit();}
+    // Redirect to the login page or any other appropriate page after logout
+    header("Location: ../Pages/login.php");
+    exit();
 }
 
-
+// Check if the logout action is triggered
+if (isset($_POST['logout'])) {
+    logout();
+}
 ?>
