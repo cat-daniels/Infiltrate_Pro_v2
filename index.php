@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link rel="stylesheet" href="style/animationstyle.css">
+    <link rel="stylesheet" href="public/style/animationstyle.css">
 </head>
 <body>
   
@@ -13,7 +13,7 @@
             <div class="center-button">
                 <h4>This tool is to be used for learning purposes only</h4>
                 <h4>Click below to begin</h4> 
-                <a href="default/homepage.php"><button>Begin</button></a>
+                <a href="Pages/homepage.php"><button>Begin</button></a>
             </div>
         </div>
     </div>
