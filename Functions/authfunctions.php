@@ -70,13 +70,18 @@ function LoginAccount($email, $password){
         // Set session variables
         $_SESSION["session_token"] = $session_token;
 
-        // Redirect to appropriate dashboard based on user role (admin or user)
         if ($user_data['isAdmin'] == true) {
-            // If admin, redirect to admin dashboard
+            // here we have to set isAdmin to true so we can carry it throughout the application
+            $_SESSION["isAdmin"] = true;
+            // Redirect to admin dashboard
             header("Location: ../Dashboards/admindashboard.php");
+            exit();
         } else {
-            // If not admin, redirect to user dashboard
+            // here we have to set isAdmin to false so that the user is set to normal user
+            $_SESSION["isAdmin"] = false;
+            // Redirect to user dashboard or homepage
             header("Location: ../Pages/homepage.php");
+            exit();
         }
 
         exit();

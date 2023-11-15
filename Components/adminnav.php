@@ -15,16 +15,16 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <a href="../help/helpdashboard.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Infiltrate Help</button></a>
+        <a href="../Pages/helpdashboard.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Infiltrate Help</button></a>
       </li>
       <li class="nav-item">
-        <a href="../admin/manageusers.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">User Accounts</button></a>
+        <a href="../UserPages/manageUser.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">User Accounts</button></a>
       </li>
       <li class="nav-item">
-        <a href="../admin/manageproducts.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Products</button></a>
+        <a href="../UserPages/manageProducts.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Products</button></a>
       </li>
       <li class="nav-item">
-        <a href="#"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
+        <a href="../UserPages/manageProducts.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
       </li>
       <li class="nav-item">
       <a href="../Functions/authfunctions.php?logout=true" class="btn btn-danger my-2 my-sm-0" id="NavButton">Logout</a>

@@ -30,6 +30,9 @@
       <li class="nav-item">
       <a href="../Pages/Contact.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact us</button></a>
       </li>
+      <li class="nav-item">
+      <a href="../UserPages/manageOrders.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Orders</button></a>
+      </li>
 
       <li class="nav-item">
       <a href="../Dashboards/userdashboard.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">My Account</button></a>

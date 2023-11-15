@@ -11,7 +11,7 @@ displayNavbar();
 include_once("../Functions/productfunctions.php");
 ?>
 <body>
-<h1>Welcome Admin!</h1>
+<h1>Products</h1>
 </body>
 
 <?php include_once("../Components/footer.php"); ?>
