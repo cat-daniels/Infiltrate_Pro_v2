@@ -6,7 +6,7 @@ include_once("../Components/usernav.php"); // Include default navbar if not logg
 
 ?>
 <body>
-<h1>homepage</h1>
+<h1>Welcome User!</h1>
 </body>
 
 <?php include_once("../Components/footer.php"); ?>
