@@ -8,7 +8,7 @@
     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="../default/homepage.php">
+  <a class="navbar-brand" href="../Pages/homepage.php">
     <img src="../images/logo.png" width="250" height="65" class="d-inline-block align-top" alt="">
   </a>
 

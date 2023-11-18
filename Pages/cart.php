@@ -15,6 +15,8 @@ include_once("../Functions/cartfunctions.php");
 <?php
 displayCart();
 ?>
+  <a href="checkout.php" class="btn btn-success my-2 my-sm-0" id="NavButton">Checkout Items</a>
+
 </body>
 
 <?php include_once("../Components/footer.php"); ?>

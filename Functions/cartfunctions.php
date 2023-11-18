@@ -59,7 +59,7 @@ function getTotalPriceOfCart() {
         return number_format($totalPrice, 2); // Format total price to 2 decimal places
     }
 
-    return '0.00'; // Return 0.00 if user not logged in or no items in cart
+    return '0.00'; // Return 0.00 if user not logged in or no items in cart - display on badge
 }
 // Function to add products to the cart
 function addToCart($productCode, $productName, $quantity, $productPrice, $totalPrice) {
@@ -153,16 +153,34 @@ function displayCart() {
                 $cartContent .= "<tr>";
                 $cartContent .= "<td>{$row['productCode']}</td>";
                 $cartContent .= "<td>{$row['productName']}</td>";
-                $cartContent .= "<td><input type='number' min='1' value='{$row['quantity']}' id='quantity_{$row['productCode']}'></td>";
+                $cartContent .= "<td>";
+                $cartContent .= "<a class='plusminus' href='?action=update&userID={$userID}&productCode={$row['productCode']}&newQuantity=" . ($row['quantity'] + 1) . "'>+</a>";
+                $cartContent .= "{$row['quantity']}"; // Display the quantity
+                $cartContent .= "<a class='plusminus' href='?action=update&userID={$userID}&productCode={$row['productCode']}&newQuantity=" . ($row['quantity'] - 1) . "'>-</a>";
+                $cartContent .= "</td>";
                 $cartContent .= "<td>{$row['price']}</td>";
                 $cartContent .= "<td>{$row['totalPrice']}</td>";
-                $cartContent .= "<td><button onclick='updateCartItem({$userID}, {$row['productCode']})'>Update</button>";
-                $cartContent .= "<button onclick='removeFromCart({$userID}, {$row['productCode']})'>Remove</button></td>";
+                $cartContent .= "<td>";
+                $cartContent .= "<a href='?action=remove&userID={$userID}&productCode={$row['productCode']}'>Remove</a>";
+                $cartContent .= "</td>";
                 $cartContent .= "</tr>";
             }
 
             $cartContent .= '</table>';
             echo $cartContent;
+
+            if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'])) {
+                if ($_GET['action'] === 'update') {
+                    //This one updates items from the cart before it was if you use headers it will throw an error
+                    echo '<meta http-equiv="refresh" content="0;url=cart.php">';
+                    exit;
+                } elseif ($_GET['action'] === 'remove') {
+                    // This removes items from the cart
+                    removeFromCart($_GET['userID'], $_GET['productCode']);
+                    echo '<meta http-equiv="refresh" content="0;url=cart.php">';
+                    exit;
+                }
+            }
         } else {
             echo "Cart is empty.";
         }
@@ -174,25 +192,42 @@ function displayCart() {
     }
 }
 
+
 // come back to this part
 function updateCartItem($userID, $productCode, $newQuantity) {
     $conn = connectdb();
 
-    // Update the quantity in the cart
-    $sql_update = "UPDATE cart SET quantity = ? WHERE userID = ? AND productCode = ?";
-    $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("iii", $newQuantity, $userID, $productCode);
-    $stmt_update->execute();
+    // Get the product's price from the database
+    $sql_price = "SELECT price FROM cart WHERE userID = ? AND productCode = ?";
+    $stmt_price = $conn->prepare($sql_price);
+    $stmt_price->bind_param("ii", $userID, $productCode);
+    $stmt_price->execute();
+    $result = $stmt_price->get_result();
 
-    if ($stmt_update->affected_rows > 0) {
-        $stmt_update->close();
-        $conn->close();
-        return true; // Quantity updated successfully
-    } else {
-        $stmt_update->close();
-        $conn->close();
-        return false; // Failed to update quantity
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $productPrice = $row['price'];
+        $newTotalPrice = $newQuantity * $productPrice;
+
+        // Update the quantity and total price in the cart
+        $sql_update = "UPDATE cart SET quantity = ?, totalPrice = ? WHERE userID = ? AND productCode = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("diii", $newQuantity, $newTotalPrice, $userID, $productCode);
+        $stmt_update->execute();
+
+        if ($stmt_update->affected_rows > 0) {
+            $stmt_update->close();
+            $conn->close();
+            return true; // Quantity updated successfully
+        } else {
+            $stmt_update->close();
+            $conn->close();
+            return false; // Failed to update quantity
+        }
     }
+
+    $conn->close();
+    return false; // Product not found or error fetching price
 }
 
 // Function to remove an item from the cart
@@ -215,4 +250,6 @@ function removeFromCart($userID, $productCode) {
         return false; // Failed to remove item
     }
 }
+
+
 ?>
