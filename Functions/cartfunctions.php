@@ -174,7 +174,7 @@ function displayCart() {
     }
 }
 
-
+// come back to this part
 function updateCartItem($userID, $productCode, $newQuantity) {
     $conn = connectdb();
 
