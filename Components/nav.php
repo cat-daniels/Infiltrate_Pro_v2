@@ -18,7 +18,7 @@
         <a href="../Pages/helpdashboard.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Infiltrate Help</button></a>
       </li>
       <li class="nav-item">
-        <a href="../Pages/Shop.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
+        <a href="../Pages/homepage.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
       </li>
       <li class="nav-item">
       <a href="../Pages/Categories.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Categories</button></a>

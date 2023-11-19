@@ -18,7 +18,11 @@ Checkaccesslevel();
 if (Checkaccesslevel()==1){
    echo "logged in as user showing product user"; 
 }elseif(Checkaccesslevel()==2){
-    echo "logged in as Admin showing product Admin";
+    displayAddProductModal();
+    
+    getProducts();
+    
+    
 }else{
     header("../Pages/login.php");
 }
