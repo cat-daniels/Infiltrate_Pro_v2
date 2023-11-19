@@ -16,8 +16,7 @@ include_once("../Functions/productfunctions.php");
 Checkaccesslevel();
 
 if (Checkaccesslevel()==2){ 
-    addProducts();
-    getProducts();
+    // this is for admin access only
 }else{
     header("../Pages/homepage.php"); // if the access level is not 2 = Admin it will automatically take the user to homepage.php
 }
