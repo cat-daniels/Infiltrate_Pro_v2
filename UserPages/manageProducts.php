@@ -15,16 +15,11 @@ include_once("../Functions/productfunctions.php");
 <?php
 Checkaccesslevel();
 
-if (Checkaccesslevel()==1){
-   echo "logged in as user showing product user"; 
-}elseif(Checkaccesslevel()==2){
-    displayAddProductModal();
-    
+if (Checkaccesslevel()==2){ 
+    addProducts();
     getProducts();
-    
-    
 }else{
-    header("../Pages/login.php");
+    header("../Pages/homepage.php"); // if the access level is not 2 = Admin it will automatically take the user to homepage.php
 }
 ?>
 </body>
