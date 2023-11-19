@@ -97,5 +97,10 @@ function displayProducts() {
 //------------Categories------------------------
 //------------Admin Product Functions---------
 
-function getProducts()
+function getProducts(){};
+function displayprodTable(){};
+function addProducts(); //<-Modal
+function editProducts(); //<-Modal
+function removeProduct();//<-Modal
+
 ?>
