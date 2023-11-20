@@ -17,6 +17,8 @@ Checkaccesslevel();
 
 if (Checkaccesslevel()==2){ 
     // this is for admin access only
+    addProducts();
+    getProducts();
 }else{
     header("../Pages/homepage.php"); // if the access level is not 2 = Admin it will automatically take the user to homepage.php
 }

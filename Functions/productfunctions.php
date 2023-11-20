@@ -97,10 +97,162 @@ function displayProducts() {
 //------------Categories------------------------
 //------------Admin Product Functions---------
 
-function getProducts(){};
-function displayprodTable(){};
-function addProducts(); //<-Modal
-function editProducts(); //<-Modal
-function removeProduct();//<-Modal
-
+function getProducts(){
+    $conn = connectdb();
+    $sql = "SELECT * FROM products";
+    $result = $conn->query($sql);
+    $prodArray = array(); // Create an array to store prod data this is so we can display it in a table :)
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $prodArray[] = $row; // Add each prod data to the array
+        }
+    } else {
+        echo "No products found.";
+    }
+    // Close the database connection
+    $conn->close();
+    // Display the user data using the displayUsers function
+    displayprodTable($prodArray);
+};
+function displayprodTable($prodArray){      
+    echo '<table class="table table-striped">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Product Code</th>';
+    echo '<th>Product Name</th>';
+    echo '<th>Price</th>';
+    echo '<th>Keywords</th>';
+    echo '<th>Categories</th>';
+    echo '<th>Featured</th>';
+    echo '<th>View</th>';
+    echo '<th>Delete</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    foreach ($prodArray as $prod) {
+        echo "<tr>";
+        echo "<td>{$prod['ProductCode']}</td>";
+        echo "<td>{$prod['ProductName']}</td>";
+        echo "<td>{$prod['Price']}</td>";
+        echo "<td>{$prod['Keywords']}</td>";
+        echo "<td>{$prod['Category']}</td>";
+        echo "<td>{$prod['Featured']}</td>";
+        // gonna comment these out for now until I have added products
+        //echo "<td><a href='vieweditproduct.php?productCode={$prod['ProductCode']}' class='btn btn-info'>View</a></td>";
+        //echo "<td><button class='btn btn-danger' onclick='deleteprod(\"{$prod['ProductCode']}\")'>Delete</button></td>";
+        echo "</tr>";
+    }
+    echo '</tbody>';
+    echo '</table>';
+}
+function addProducts() {
+    $conn = connectdb();
+    // Static definition of keywords and categories
+    $keywords = array("Electronics", "Clothing", "Books", "Accessories");
+    $categories = array("Tech", "Fashion", "Literature", "Miscellaneous");
+    echo '
+    <!-- Button to trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+        Add New Product
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for adding a new product -->
+                    <form id="addProductForm" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" class="form-control" id="productName" name="productName" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="featured">Featured</label>
+                            <select class="form-control" id="featured" name="featured" required>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="imageFile">Upload Image</label>
+                            <input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*" required>
+                        </div>
+    
+                        
+    
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    </script>
+    ';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Retrieve form data
+        $productName = $_POST['productName'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+        $featured = $_POST['featured']; 
+        $imagePath = '../images/' . basename($_FILES['imageFile']['name']);
+        
+        // Check if the file was uploaded successfully
+        if (move_uploaded_file($_FILES['imageFile']['tmp_name'], $imagePath)) {
+            // Insert product information into 'products' table
+            $conn = connectdb();
+            $conn = connectdb();
+            $keywordsString = implode(", ", $keywords);
+            $categoryString = implode(", ", $categories);
+    
+            $sql = "INSERT INTO products (ProductName, Price, Description, Keywords, Category, Featured, Image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+    
+            if ($stmt === false) {
+                die("Error: Unable to prepare the SQL statement");
+            }
+    
+            $result = $stmt->bind_param("sdsssis", $productName, $price, $description, $keywordsString, $categoryString, $featured, $imagePath);
+    
+            if ($result === false) {
+                die("Error: Unable to bind parameters");
+            }
+    
+            $executeResult = $stmt->execute();
+    
+            if ($executeResult === false) {
+                die("Error: Unable to execute the SQL statement");
+            }
+    
+            echo "Product added successfully";
+    
+            $stmt->close();
+            $conn->close();
+        } else {
+            die("Error: Failed to move the uploaded file. Please try again.");
+        }
+    }
+}
 ?>
+
