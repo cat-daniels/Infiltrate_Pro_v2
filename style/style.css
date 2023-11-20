@@ -41,7 +41,6 @@ margin: 5px;
   .row1{
     /*This is so that the footer doesn't cover the content*/
     padding: 20px;
-    padding-bottom: 120px;
     margin-bottom: 20px;
   }
 
@@ -96,3 +95,25 @@ margin: 5px;
     text-align: center;
     color: white; /* Text color */
 }
+
+.circular-image {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto; 
+    border: 8px solid white;
+    box-sizing: border-box;
+  }
+
+  .circular-image img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
+
+  .gap{
+    height: 20px;
+    width: 100%;
+    padding-bottom: 110px;
+  }
