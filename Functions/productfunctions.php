@@ -144,9 +144,9 @@ function displayprodTable($prodArray){
         echo "<td>{$prod['Keywords']}</td>";
         echo "<td>{$prod['Category']}</td>";
         echo "<td>{$prod['Featured']}</td>";
-        // gonna comment these out for now until I have added products
-        //echo "<td><a href='vieweditproduct.php?productCode={$prod['ProductCode']}' class='btn btn-info'>View</a></td>";
-        //echo "<td><button class='btn btn-danger' onclick='deleteprod(\"{$prod['ProductCode']}\")'>Delete</button></td>";
+        
+        echo "<td><a href='vieweditproduct.php?productCode={$prod['ProductCode']}' class='btn btn-info'>View</a></td>";
+        echo "<td><button class='btn btn-danger' onclick='deleteprod(\"{$prod['ProductCode']}\")'>Delete</button></td>";
         echo "</tr>";
     }
     echo '</tbody>';
