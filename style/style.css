@@ -3,6 +3,7 @@ margin: 5px;
 }
 
 .navbar {
+    width: 100%;
     background-image: url("../images/Background_blue_purple.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -25,6 +26,7 @@ margin: 5px;
 
 .footer {
     position: fixed;
+    margin-top: 20px;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -34,6 +36,13 @@ margin: 5px;
     padding: 20px 0;
     text-align: center;
     color: white; /* Text color */
+  }
+
+  .row1{
+    /*This is so that the footer doesn't cover the content*/
+    padding: 20px;
+    padding-bottom: 120px;
+    margin-bottom: 20px;
   }
 
 .displaytext
@@ -63,4 +72,27 @@ margin: 5px;
     color: #333; 
     font-weight: bold;
     margin: 0 5px; 
+}
+
+.block{
+    background-image: url("../images/bluegradient.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: white; /* Text color */
+}
+
+.block2{
+    background-image: url("../images/bluegradient - Copy.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: white; /* Text color */
+}
+.block3{
+    background-image: url("../images/bluegradient\ -\ Copy\ \(2\).png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: white; /* Text color */
 }

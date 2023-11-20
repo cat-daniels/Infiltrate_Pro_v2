@@ -91,6 +91,8 @@ include_once("../Functions/checkoutfunctions.php");
             echo "Reference: 404<br>";
             echo "12-1234-1234567-000";
         }
+
+        
         ?>
     </p>
   </div>

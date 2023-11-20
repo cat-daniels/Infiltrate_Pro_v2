@@ -36,7 +36,7 @@ function displayProducts() {
         while ($row = $result->fetch_assoc()) {
             if ($productsCounter % 4 === 0) {
                 // Start a new row for every 4 products
-                echo '<div class="row">';
+                echo '<div class="row1" id = "rowset">';
             }
 
             echo '<div class="col-md-3">';

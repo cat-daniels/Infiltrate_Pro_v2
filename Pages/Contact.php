@@ -7,10 +7,69 @@ include_once("../Utils/sessionconfig.php");
 
 displayNavbar();
 ?> 
+<div class="block" style="height: 300px; margin-top: 20px;">
+  <div class="row1">
+    <div class="col-xl">
+      <div class ="backgroundcontact">
+        Background
+      </div>
+    </div>
+  </div>
+  <div class="row" style="height: 250px">
+    <div class="col-6">
+      Picture
+    </div>
+    <div class="col">
+      Blurb
+    </div>
+    <div class="col">
+      Blurb
+    </div>
+  </div>
+</div>
 
-<body>
-<h1>Contact</h1>
-</body>
+<div class="block2" id="contactstyle" style="height: 300px; margin-top: 20px;">
+  <div class="row1">
+    <div class="col-xl">
+      <div class ="backgroundcontact">
+        Background
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Blurb
+    </div>
+    <div class="col">
+      Blurb
+    </div>
+    <div class="col-6">
+      Picture
+    </div>
+    </div>
+  </div>
+</div>
 
+<div class="block3" style="height: 300px; margin-top: 20px;">
+  <div class="row1">
+    <div class="col-xl">
+      <div class ="backgroundcontact">
+        Background
+      </div>
+    </div>
+  </div>
+  <div class="row" style="height: 250px">
+    <div class="col-6">
+      Picture
+    </div>
+    <div class="col">
+      Blurb
+    </div>
+    <div class="col">
+      Blurb
+    </div>
+  </div>
+</div>
 <?php include_once("../Components/footer.php"); ?>
 </html>
+
