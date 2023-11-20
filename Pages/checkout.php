@@ -29,7 +29,7 @@ include_once("../Functions/checkoutfunctions.php");
       </div>
       <div class="modal-body">
 <!-- Form for user details -->
-<form action="process_checkout.php" method="post">
+<form action="orderfunctions.php?createOrder=true" method="post">
   <div class="form-group">
     <label for="firstName">First Name</label>
     <input type="text" class="form-control" id="firstName" name="firstName" required>

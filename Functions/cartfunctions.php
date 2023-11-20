@@ -56,11 +56,12 @@ function getTotalPriceOfCart() {
         $stmt->close();
         $conn->close();
 
-        return number_format($totalPrice, 2); // Format total price to 2 decimal places
-    }
-
-    return '0.00'; // Return 0.00 if user not logged in or no items in cart - display on badge
-}
+        if ($totalPrice !== null) {
+            return number_format((float)$totalPrice, 2);
+        } else {
+            return '0.00'; // Return a default value if totalPrice is null
+        }; // Return 0.00 if user not logged in or no items in cart - display on badge
+}}
 // Function to add products to the cart
 function addToCart($productCode, $productName, $quantity, $productPrice, $totalPrice) {
     $userID = isset($_SESSION['uid']) ? $_SESSION['uid'] : null;

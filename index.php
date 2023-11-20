@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link rel="stylesheet" href="public/style/animationstyle.css">
+    <link rel="stylesheet" href="style/animationstyle.css">
 </head>
 <body>
   
