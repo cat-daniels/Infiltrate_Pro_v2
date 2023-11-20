@@ -171,12 +171,17 @@ function displayCart() {
 
             if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'])) {
                 if ($_GET['action'] === 'update') {
-                    //This one updates items from the cart before it was if you use headers it will throw an error
+                    $userID = $_GET['userID'];
+                    $productCode = $_GET['productCode'];
+                    $newQuantity = $_GET['newQuantity'];
+                    updateCartItem($userID, $productCode, $newQuantity);
                     echo '<meta http-equiv="refresh" content="0;url=cart.php">';
                     exit;
                 } elseif ($_GET['action'] === 'remove') {
-                    // This removes items from the cart
-                    removeFromCart($_GET['userID'], $_GET['productCode']);
+                    $userID = $_GET['userID'];
+                    $productCode = $_GET['productCode'];
+                    $newQuantity = $_GET['newQuantity'];
+                    removeFromCart($userID, $productCode, $newQuantity);
                     echo '<meta http-equiv="refresh" content="0;url=cart.php">';
                     exit;
                 }
