@@ -14,15 +14,19 @@ include_once("../Functions/productfunctions.php");
 <body>
 <?php
 Checkaccesslevel();
-
+if (isset($_GET['orderId'])) {
+    $orderId = $_GET['orderId'];
 if (Checkaccesslevel()==1){
-    displayOrdersBySessionUID(); 
+    displayOrderDetails($orderId);
+   echo "logged in as user showing orders user"; 
 }elseif(Checkaccesslevel()==2){
-    displayAllOrders();
+    displayOrderDetails($orderId);
 }else{
     header("../Pages/login.php");
-}
+}}
+
 ?>
+<div class = "gap"></div>
 </body>
 
 <?php include_once("../Components/footer.php"); ?>

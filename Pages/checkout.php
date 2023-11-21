@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           $totalAmount += $item['totalPrice'];
 
           // Append product details to the order string (you may customize this format as per your requirement)
-          $orderDetails .= "Product: " . $item['productName'] . ", Quantity: " . $item['quantity'] . "\n";
+          $orderDetails .= "Product: " . $item['productName'] . ", Quantity: " . $item['quantity'] . ", Price: " . $item['price'] . ", LinePrice: " . $item['totalPrice'] . "\n";
       }
 
       // Insert order details into the Orders table
