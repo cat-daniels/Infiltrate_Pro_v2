@@ -146,7 +146,7 @@ function displayprodTable($prodArray){
         echo "<td>{$prod['Featured']}</td>";
         
         echo "<td><a href='vieweditproduct.php?productCode={$prod['ProductCode']}' class='btn btn-info'>View</a></td>";
-        echo "<td><button class='btn btn-danger' onclick='deleteprod(\"{$prod['ProductCode']}\")'>Delete</button></td>";
+        echo "<td><a href='deleteprod.php?productCode={$prod['ProductCode']}' class='btn btn-danger'>delete</a></td>";
         echo "</tr>";
     }
     echo '</tbody>';
@@ -267,4 +267,245 @@ function addProducts() {
         }
     }
 }
+
+function editProd($productCode) {
+    $conn = connectdb();
+
+    $sql = "SELECT * FROM products WHERE ProductCode=?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        die("Error: Unable to prepare the SQL statement");
+    }
+
+    $result = $stmt->bind_param("s", $productCode);
+
+    if ($result === false) {
+        die("Error: Unable to bind parameters");
+    }
+
+    $executeResult = $stmt->execute();
+
+    if ($executeResult === false) {
+        die("Error: Unable to execute the SQL statement");
+    }
+
+    $productData = $stmt->get_result()->fetch_assoc();
+
+    if (!$productData) {
+        die("Error: Product not found");
+    }
+
+    // Display the retrieved product information in an editable form
+    echo '
+    <!-- Form for editing product details -->
+    <form id="editProductForm" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" class="form-control" id="productName" name="productName" value="' . $productData['ProductName'] . '" required>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" value="' . $productData['Price'] . '" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>' . $productData['Description'] . '</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="featured">Featured</label>
+            <select class="form-control" id="featured" name="featured" required>
+                <option value="1" ' . ($productData['Featured'] == 1 ? 'selected' : '') . '>Yes</option>
+                <option value="0" ' . ($productData['Featured'] == 0 ? 'selected' : '') . '>No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="imageFile">Upload Image</label>
+            <input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="keywords">Keywords</label><br>';
+
+    // Keywords checkbox creation based on existing values
+    $keywords = explode(", ", $productData['Keywords']);
+    $existingKeywords = ['Electronics', 'Clothing', 'Books', 'Accessories']; // Sample keywords
+    foreach ($existingKeywords as $keyword) {
+        $isChecked = in_array($keyword, $keywords) ? 'checked' : '';
+        echo '<input type="checkbox" name="keywords[]" value="' . $keyword . '" ' . $isChecked . '> ' . $keyword . '<br>';
+    }
+
+    echo '</div>
+
+        <div class="form-group">
+            <label for="category">Category</label><br>';
+
+    // Categories checkbox creation based on existing values
+    $categories = explode(", ", $productData['Category']);
+    $existingCategories = ['Tech', 'Fashion', 'Literature', 'Miscellaneous']; // Sample categories
+    foreach ($existingCategories as $category) {
+        $isChecked = in_array($category, $categories) ? 'checked' : '';
+        echo '<input type="checkbox" name="category[]" value="' . $category . '" ' . $isChecked . '> ' . $category . '<br>';
+    }
+
+    echo '</div>
+        <input type="hidden" name="productCode" value="' . $productCode . '">
+        <button type="submit" class="btn btn-success" name="updateProduct">Update Product</button>
+    </form>';
+    $stmt->close();
+    $conn->close();
+    
+    // Handling POST request for updating product details
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
+        $conn = connectdb();
+
+        $productName = $_POST['productName'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+        $featured = $_POST['featured'];
+        $keywords = implode(", ", $_POST['keywords']);
+        $categories = implode(", ", $_POST['category']);
+        // Retrieve other form fields (Image) similarly
+
+        $sql = "UPDATE products SET ";
+        $bindParams = array();
+        $bindTypes = '';
+        $comma = "";
+
+        if (!empty($productName)) {
+            $sql .= "ProductName=?, ";
+            $bindParams[] = $productName;
+            $bindTypes .= 's';
+        }
+
+        if (!empty($price)) {
+            $sql .= "Price=?, ";
+            $bindParams[] = $price;
+            $bindTypes .= 'd';
+        }
+
+        if (!empty($description)) {
+            $sql .= "Description=?, ";
+            $bindParams[] = $description;
+            $bindTypes .= 's';
+        }
+
+        if (!empty($featured)) {
+            $sql .= "Featured=?, ";
+            $bindParams[] = $featured;
+            $bindTypes .= 's';
+        }
+
+        if (!empty($keywords)) {
+            $sql .= "Keywords=?, ";
+            $bindParams[] = $keywords;
+            $bindTypes .= 's';
+        }
+
+        if (!empty($categories)) {
+            $sql .= "Category=?, ";
+            $bindParams[] = $categories;
+            $bindTypes .= 's';
+        }
+
+        // Remove the last comma and space
+        $sql = rtrim($sql, ", ");
+
+        // Add the WHERE condition
+        $sql .= " WHERE ProductCode=?";
+        $bindParams[] = $productCode;
+        $bindTypes .= 's';
+
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Error: Unable to prepare the SQL statement");
+        }
+
+        // Bind parameters dynamically
+        $stmt->bind_param($bindTypes, ...$bindParams);
+
+        // Execute the statement
+        $executeResult = $stmt->execute();
+
+        if ($executeResult === false) {
+            die("Error: Unable to execute the SQL statement");
+        }
+
+        echo "Product details updated successfully";
+
+        $stmt->close();
+        $conn->close();
+    }
+}
+
+function deleteProd($productCode) {
+    $conn = connectdb();
+
+    $sql = "SELECT * FROM products WHERE ProductCode=?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        die("Error: Unable to prepare the SQL statement");
+    }
+
+    $result = $stmt->bind_param("s", $productCode);
+
+    if ($result === false) {
+        die("Error: Unable to bind parameters");
+    }
+
+    $executeResult = $stmt->execute();
+
+    if ($executeResult === false) {
+        die("Error: Unable to execute the SQL statement");
+    }
+
+    $productData = $stmt->get_result()->fetch_assoc();
+
+    if (!$productData) {
+        die("Error: Product not found");
+    }
+
+    echo '<div>Are you sure you want to delete product: ' . $productData['ProductName'] . '?</div>';
+    echo '<form method="POST">
+            <input type="hidden" name="productCode" value="' . $productCode . '">
+            <button type="submit" name="confirmDelete">Yes, Delete</button>
+          </form>';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmDelete'])) {
+        $sql = "DELETE FROM products WHERE ProductCode=?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Error: Unable to prepare the SQL statement");
+        }
+
+        $result = $stmt->bind_param("s", $productCode);
+
+        if ($result === false) {
+            die("Error: Unable to bind parameters");
+        }
+
+        $executeResult = $stmt->execute();
+
+        if ($executeResult === false) {
+            die("Error: Unable to execute the SQL statement");
+        }
+
+        echo "Product deleted successfully";
+
+        $stmt->close();
+    }
+
+    $conn->close();
+}
+
+
+
+
 ?>
