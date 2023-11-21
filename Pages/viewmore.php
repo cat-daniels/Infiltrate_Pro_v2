@@ -67,7 +67,7 @@ if (isset($_GET['ProductCode'])) {
                     echo '<a href="../Pages/login.php" class="btn btn-secondary">Log in to Add to Cart</a>';
                 }
                 echo '</form>';
-                echo '<button class="btn btn-secondary">See Reviews</button>';
+                echo '<a href="leavereview.php" class="btn btn-secondary">See Review</a>';
                 echo '</div>'; // Close d-flex div
                 echo '</div>'; // Close product-details div
                 echo '</div>'; // Close col-lg-8 div
