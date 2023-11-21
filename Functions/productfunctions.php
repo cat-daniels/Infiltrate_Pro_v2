@@ -69,6 +69,9 @@ function displayProducts() {
             } else {
                 echo '<a href="../Pages/login.php" id="Navbutton" class="btn btn-secondary flex-grow-1">Log in to Add to Cart</a>';
             }
+             // Display product reviews
+             echo '<div class="product-reviews">';
+             displayReviewsForProduct($row['ProductCode']);
             echo '</form>';
             echo '</div>'; // Close d-flex
 
@@ -534,6 +537,63 @@ function deleteProd($productCode) {
 }
 
 
+function getReviewsForProduct($productCode) {
+   $conn = connectdb();
+
+    $sql = "SELECT * FROM reviews WHERE productCode = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $productCode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $reviews = array();
+    while ($row = $result->fetch_assoc()) {
+        $reviews[] = $row;
+    }
+    $stmt->close();
+    $conn->close();
+    return $reviews;
+}
+function displayReviewsForProduct($productCode) {
+    $reviews = getReviewsForProduct($productCode);
+    if (count($reviews) === 0) {
+        echo '<a href="leavereview.php?ProductCode=' . $productCode . '" class="btn btn-secondary">Leave a Review</a>';
+    } else {
+        // Calculate the average rating
+        $totalRating = 0;
+        foreach ($reviews as $review) {
+            $totalRating += $review['rating'];
+        }
+        $averageRating = $totalRating / count($reviews);
+        echo "Average Rating: " . number_format($averageRating, 1); // Show the average rating as a number with one decimal place
+        echo "<br>";
+        
+        // Add a link to the reviews page
+        echo '<a href="leavereview.php?ProductCode=' . $productCode . '"class="btn btn-success">See All Reviews</a>';
+    }
+}
+function displayAllReviewsForProduct($productCode) {
+    $reviews = getReviewsForProduct($productCode);
+    if (count($reviews) === 0) {
+        echo "Be the first to leave a review";
+    } else {
+        // Calculate the average rating
+        $totalRating = 0;
+        foreach ($reviews as $review) {
+            $totalRating += $review['rating'];
+        }
+        $averageRating = $totalRating / count($reviews);
+        echo "Average Rating: " . number_format($averageRating, 1); // Show the average rating as a number with one decimal place
+        echo "<br><br>";
+       
+        //display each review
+        foreach ($reviews as $review) {
+            echo "Rating: " . $review['rating'] . " Stars<br>";
+            echo "Review: " . $review['review_text'] . "<br>";
+            echo "Date: " . $review['review_date'] . "<br>";
+            echo "<hr>";
+        }
+    }
+}
 
 
 ?>
