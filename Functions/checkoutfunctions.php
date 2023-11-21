@@ -50,4 +50,31 @@ function randomreference($uid){
 
     return $reference;
 }
+
+function generateOrderNumber(){
+    // Generate a random number
+    $randomNumber = rand(10, 100);
+
+    return $randomNumber;
+}
+
+
+// clear the cart after the form has been submitted:
+    function clearCart($uid) {
+       $conn = connectdb();    
+        // SQL query to delete cart items for the provided user ID
+        $sql = "DELETE FROM cart WHERE userID = ?";
+        
+        $stmt = $conn->prepare($sql);
+    
+        if ($stmt) {
+            $stmt->bind_param("i", $uid);
+            $stmt->execute();
+            $stmt->close();
+            $conn->close();
+    
+        } else {
+            echo "Error: " . $conn->error;
+        }
+    }
 ?>

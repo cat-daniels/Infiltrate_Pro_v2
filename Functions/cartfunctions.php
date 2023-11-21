@@ -5,6 +5,31 @@ ini_set('display_errors', 1);
 include_once("../Utils/database.php");
 include_once("../Utils/sessionconfig.php");
 
+function getCartByUID($userID) {
+    $conn = connectdb();
+
+    $cartInfo = array();
+
+    if ($userID) {
+        $sql = "SELECT * FROM cart WHERE userID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $cartInfo[] = $row; // Add cart item information to the array
+            }
+        }
+        
+        $stmt->close();
+    }
+
+    $conn->close();
+
+    return $cartInfo;
+}
 // This is for the navbar so we can display the cartprice and qty on the navbar :D
 // Function to get the total number of items in the cart
 function getTotalItemsInCart() {
@@ -105,7 +130,6 @@ function addToCart($productCode, $productName, $quantity, $productPrice, $totalP
             $stmt_insert = $conn->prepare($sql_insert);
 
             if ($stmt_insert) {
-                // Bind parameters
                 $stmt_insert->bind_param("isssdd", $userID, $productCode, $productName, $quantity, $productPrice, $newTotalPrice);
                 $stmt_insert->execute();
 
@@ -130,7 +154,6 @@ function addToCart($productCode, $productName, $quantity, $productPrice, $totalP
     }
 }
 // for the updating of the cart functions
-
 
 function displayCart() {
     sessioncheck();
@@ -171,16 +194,14 @@ function displayCart() {
             echo $cartContent;
 
             if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'])) {
-                if ($_GET['action'] === 'update') {
-                    //This one updates items from the cart before it was if you use headers it will throw an error
-                    echo '<meta http-equiv="refresh" content="0;url=cart.php">';
+                if ($_GET['action'] === 'update' && isset($_GET['newQuantity'])) {
+                    $userID = $_GET['userID'];
+                    $productCode = $_GET['productCode'];
+                    $newQuantity = $_GET['newQuantity'];
+                    updateCartItem($userID, $productCode, $newQuantity);
+                    header("Location: cart.php");
                     exit;
-                } elseif ($_GET['action'] === 'remove') {
-                    // This removes items from the cart
-                    removeFromCart($_GET['userID'], $_GET['productCode']);
-                    echo '<meta http-equiv="refresh" content="0;url=cart.php">';
-                    exit;
-                }
+                 }
             }
         } else {
             echo "Cart is empty.";
@@ -194,7 +215,7 @@ function displayCart() {
 }
 
 
-// come back to this part
+// come back to this part ***Done***
 function updateCartItem($userID, $productCode, $newQuantity) {
     $conn = connectdb();
 
@@ -231,7 +252,7 @@ function updateCartItem($userID, $productCode, $newQuantity) {
     return false; // Product not found or error fetching price
 }
 
-// Function to remove an item from the cart
+// Function to remove an item from the cart **Note this will totally remove the item from the cart
 function removeFromCart($userID, $productCode) {
     $conn = connectdb();
 
