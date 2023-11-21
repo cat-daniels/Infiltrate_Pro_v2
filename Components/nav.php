@@ -20,10 +20,20 @@
       <li class="nav-item">
         <a href="../Pages/homepage.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Shop</button></a>
       </li>
-      <li class="nav-item">
-      <a href="../Pages/Categories.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Categories</button></a>
-        <!-- Add dropdown here -->
-      </li>
+      <li class="nav-item dropdown">
+    <div class="dropdown">
+        <button class="btn btn-info my-2 my-sm-0 dropdown-toggle" type="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="../Pages/Categories.php?category=Tech">Tech</a>
+            <a class="dropdown-item" href="../Pages/Categories.php?category=Fashion">Fashion</a>
+            <a class="dropdown-item" href="../Pages/Categories.php?category=Literature">Literature</a>
+            <a class="dropdown-item" href="../Pages/Categories.php?category=Miscellaneous">Miscellaneous</a>
+            <!-- Add more categories here if needed -->
+        </div>
+</li>
+
       
       <li class="nav-item">
       <a href="../Pages/Contact.php"><button class="btn btn-info my-2 my-sm-0" id="NavButton">Contact us</button></a>

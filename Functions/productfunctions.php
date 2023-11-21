@@ -94,11 +94,39 @@ function displayProducts() {
 
     $conn->close();
 }
-
-
 //------------Categories------------------------
-//------------Admin Product Functions---------
+function displayCategory($selectedCategory) {
+    $conn = connectdb();
 
+    // Fetch all products
+    $sql = "SELECT * FROM products";
+    $result = $conn->query($sql);
+
+    if ($result === false) {
+        die("Error: Unable to fetch products");
+    }
+
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+        $categories = explode(", ", $row['Category']);
+        if (in_array($selectedCategory, $categories)) {
+            $products[] = $row;
+        }
+    }
+
+    // Display fetched products based on the selected category
+    foreach ($products as $product) {
+        // Display each product in the selected category
+        echo "<p>Product Name: {$product['ProductName']}</p>";
+        echo "<p>Price: {$product['Price']}</p>";
+        echo "<p>Description: {$product['Description']}</p>";
+        // will add more stuff here as needed
+    }
+
+    $conn->close();
+}
+
+//------------Admin Product Functions---------
 function getProducts(){
     $conn = connectdb();
     $sql = "SELECT * FROM products";
