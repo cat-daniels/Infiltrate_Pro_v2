@@ -34,7 +34,7 @@ function displaySearchBar() {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the 'query' parameter is present in the POST data
     if (isset($_POST['query'])) {
-        // Retrieve and sanitize the user input
+        
         $userInput = $_POST['query'];
         
         echo '<div class="d-flex flex-column align-items-center mt-4"> <h5>';
