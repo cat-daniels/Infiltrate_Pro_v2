@@ -32,71 +32,69 @@ function displayProducts() {
     }
     if ($result->num_rows > 0) {
         $productsCounter = 0;
-
+            
+    
+        echo '<div class="row" id="rowset">'; // Start the initial row
+    
         while ($row = $result->fetch_assoc()) {
-            if ($productsCounter % 4 === 0) {
-                // Start a new row for every 4 products
-                echo '<div class="row1" id = "rowset">';
+            if ($productsCounter % 4 === 0 && $productsCounter !== 0) {
+                echo '</div>'; // Close row
+                echo '<div class="row" id="rowset">'; // Start a new row for every 4 products
             }
-
+    
             echo '<div class="col-md-3">';
-            echo '<div class="card" style="width: 18rem;">';
-
-            // Display the image if available
-            if (!empty($row['Image'])) {
-                $imagePath = '../images/' . $row['Image']; // Construct the full path
-                echo '<img src="' . $imagePath . '" class="card-img-top" alt="' . $row['ProductName'] . '">';
-            } else {
-                echo '<img src="placeholder_image.jpg" class="card-img-top" alt="No Image">';
-            }
-
-            echo '<div class="card-body">';
+            echo '<div class="card mb-4" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 5px;">';
+            echo '<div class="image-container" style="height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">'; 
+            echo '<img src="' . ($row['Image'] ? '../images/' . $row['Image'] : 'placeholder_image.jpg') . '" class="card-img-top" alt="' . $row['ProductName'] . '" style="width: 80%; height: auto; object-fit: cover;">'; 
+            echo '</div>';          
+             echo '<div class="card-body">';
             echo '<h5 class="card-title">' . $row['ProductName'] . '</h5>';
             echo '<p class="card-text">Price: $' . $row['Price'] . '</p>';
             echo '<p class="card-text">Description: ' . $row['Description'] . '</p>';
-            
-            echo '<div class="d-flex justify-content-between">'; // Use Bootstrap's d-flex for flex container
-            echo '<a href="viewmore.php?ProductCode=' . $row['ProductCode'] . '" class="btn btn-primary flex-grow-1">View More</a>';
 
-            // Add to Cart button logic
-            echo '<form class="d-flex flex-grow-1" method="post" action="">';
+            // View More and Add to Cart buttons aligned horizontally
+            echo '<div class="d-flex justify-content-between">';
+            echo '<a href="viewmore.php?ProductCode=' . $row['ProductCode'] . '" class="btn btn-primary" style="
+            height: fit-content">View More</a>';
+    
+            echo '<form method="post" action="" style="margin-left: auto; display: flex;">'; // Apply flexbox style for form alignment
             if (sessioncheck() == true) {
                 echo '<input type="hidden" name="productCode" value="' . $row['ProductCode'] . '">';
                 echo '<input type="hidden" name="productName" value="' . $row['ProductName'] . '">';
                 echo '<input type="hidden" name="productPrice" value="' . $row['Price'] . '">';
                 echo '<input type="hidden" name="addToCart" value="true">';
-                echo '<button type="submit" name="addToCartBtn" id="Navbutton" class="btn btn-secondary flex-grow-1">Add to Cart</button>';
+                echo '<button type="submit" name="addToCartBtn" class="btn btn-secondary" style="width: 100%;">Add to Cart</button>'; // Apply width: 100%
             } else {
-                echo '<a href="../Pages/login.php" id="Navbutton" class="btn btn-secondary flex-grow-1">Log in to Add to Cart</a>';
+                echo '<a href="../Pages/login.php" class="btn btn-secondary" style="width: 100%;">Add to Cart</a>'; // Apply width: 100%
             }
-             // Display product reviews
-             echo '<div class="product-reviews">';
-             displayReviewsForProduct($row['ProductCode']);
             echo '</form>';
             echo '</div>'; // Close d-flex
 
+            echo '<div class="product-reviews">';
+            displayReviewsForProduct($row['ProductCode']); // Display product reviews
+            echo '</div>';
+    
             echo '</div>'; // Close card-body
             echo '</div>'; // Close card
             echo '</div>'; // Close col-md-3
-
+    
             $productsCounter++;
-
+    
             if ($productsCounter % 4 === 0) {
-                // Close the row after every 4 products
-                echo '</div>'; // Close row
+                echo '</div>'; // Close row after every 4 products
             }
         }
-
-        // Close the last row if it's not already closed
+    
         if ($productsCounter % 4 !== 0) {
-            echo '</div>'; // Close row
+            echo '</div>'; // Close row if the last row is incomplete
         }
     } else {
         echo "No products found.";
     }
 
-    $conn->close();
+    echo '<div class = "gap"></div>';
 }
+
 //------------Categories------------------------
 function displayCategory($selectedCategory) {
     $conn = connectdb();
@@ -185,8 +183,8 @@ function displayprodTable($prodArray){
 }
 
 function addProducts() {
-
     $conn = connectdb();
+    
     // Static definition of keywords and categories
     $keywords = array("Electronics", "Clothing", "Books", "Accessories");
     $categories = array("Tech", "Fashion", "Literature", "Miscellaneous");
@@ -214,17 +212,17 @@ function addProducts() {
                             <label for="productName">Product Name</label>
                             <input type="text" class="form-control" id="productName" name="productName" required>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="price">Price</label>
                             <input type="number" class="form-control" id="price" name="price" step="0.01" required>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="featured">Featured</label>
                             <select class="form-control" id="featured" name="featured" required>
@@ -232,72 +230,89 @@ function addProducts() {
                                 <option value="0">No</option>
                             </select>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="imageFile">Upload Image</label>
                             <input type="file" class="form-control-file" id="imageFile" name="imageFile" accept="image/*" required>
                         </div>
-    
 
-                        
-    
+                        <div class="form-group">
+                            <label>Keywords</label><br>';
+    // Display checkboxes for keywords
+    foreach ($keywords as $keyword) {
+        echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="keywords[]" value="' . $keyword . '">
+                <label class="form-check-label">' . $keyword . '</label>
+              </div>';
+    }
+    echo '</div>
+
+                        <div class="form-group">
+                            <label>Categories</label><br>';
+    // Display checkboxes for categories
+    foreach ($categories as $category) {
+        echo '<div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="categories[]" value="' . $category . '">
+                <label class="form-check-label">' . $category . '</label>
+              </div>';
+    }
+    echo '</div>
+
                         <button type="submit" class="btn btn-primary">Add Product</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div>';
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    </script>
-    ';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve form data
         $productName = $_POST['productName'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $featured = $_POST['featured']; 
+        $featured = $_POST['featured'];
         $imagePath = '../images/' . basename($_FILES['imageFile']['name']);
-        
-        // Check if the file was uploaded successfully
-        if (move_uploaded_file($_FILES['imageFile']['tmp_name'], $imagePath)) {
-            // Insert product information into 'products' table
-            $conn = connectdb();
-            $conn = connectdb();
 
-            $keywordsString = implode(", ", $keywords);
-            $categoryString = implode(", ", $categories);
-    
-            $sql = "INSERT INTO products (ProductName, Price, Description, Keywords, Category, Featured, Image) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-    
-            if ($stmt === false) {
-                die("Error: Unable to prepare the SQL statement");
-            }
-    
-            $result = $stmt->bind_param("sdsssis", $productName, $price, $description, $keywordsString, $categoryString, $featured, $imagePath);
-    
-            if ($result === false) {
-                die("Error: Unable to bind parameters");
-            }
-    
-            $executeResult = $stmt->execute();
-    
-            if ($executeResult === false) {
-                die("Error: Unable to execute the SQL statement");
-            }
-    
-            echo "Product added successfully";
-    
-            $stmt->close();
-            $conn->close();
-        } else {
-            die("Error: Failed to move the uploaded file. Please try again.");
-        }
+         // Handle checkboxes for keywords
+    $selectedKeywords = $_POST['keywords'] ?? array();
+    $selectedKeywords = array_filter($selectedKeywords, function ($key) use ($keywords) {
+        return in_array($key, $keywords);
+    });
+
+    $keywordsString = implode(", ", $selectedKeywords);
+
+    $selectedCategories = $_POST['categories'] ?? array();
+    $selectedCategories = array_filter($selectedCategories, function ($category) use ($categories) {
+        return in_array($category, $categories);
+    });
+
+    $categoryString = implode(", ", $selectedCategories);
+
+    // Insert product information into 'products' table
+    $sql = "INSERT INTO products (ProductName, Price, Description, Keywords, Category, Featured, Image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        die("Error: Unable to prepare the SQL statement");
     }
-}
+
+    $result = $stmt->bind_param("sdsssis", $productName, $price, $description, $keywordsString, $categoryString, $featured, $imagePath);
+
+    if ($result === false) {
+        die("Error: Unable to bind parameters");
+    }
+
+    $executeResult = $stmt->execute();
+
+    if ($executeResult === false) {
+        die("Error: Unable to execute the SQL statement");
+    }
+
+    echo "Product added successfully";
+
+    $stmt->close();
+    $conn->close();
+}}
 
 function editProd($productCode) {
     $conn = connectdb();
@@ -327,7 +342,7 @@ function editProd($productCode) {
         die("Error: Product not found");
     }
 
-    // Display the retrieved product information in an editable form
+    // Display the retrieved product information form
     echo '
     <!-- Form for editing product details -->
     <form id="editProductForm" method="POST" enctype="multipart/form-data">
@@ -364,7 +379,7 @@ function editProd($productCode) {
 
     // Keywords checkbox creation based on existing values
     $keywords = explode(", ", $productData['Keywords']);
-    $existingKeywords = ['Electronics', 'Clothing', 'Books', 'Accessories']; // Sample keywords
+    $existingKeywords = ['Electronics', 'Clothing', 'Books', 'Accessories']; 
     foreach ($existingKeywords as $keyword) {
         $isChecked = in_array($keyword, $keywords) ? 'checked' : '';
         echo '<input type="checkbox" name="keywords[]" value="' . $keyword . '" ' . $isChecked . '> ' . $keyword . '<br>';
@@ -556,20 +571,28 @@ function getReviewsForProduct($productCode) {
 function displayReviewsForProduct($productCode) {
     $reviews = getReviewsForProduct($productCode);
     if (count($reviews) === 0) {
-        echo '<a href="leavereview.php?ProductCode=' . $productCode . '" class="btn btn-secondary">Leave a Review</a>';
-    } else {
+        echo '<div class="row">';
+        echo '<div class="col text-center">';
+        echo '<a href="leavereview.php?ProductCode=' . $productCode . '" class="btn btn-success btn-block">Leave a Review</a>';
+        echo '</div>';
+        echo '</div>';   } else {
         // Calculate the average rating
         $totalRating = 0;
         foreach ($reviews as $review) {
             $totalRating += $review['rating'];
         }
         $averageRating = $totalRating / count($reviews);
-        echo "Average Rating: " . number_format($averageRating, 1); // Show the average rating as a number with one decimal place
-        echo "<br>";
+        echo '<div class="col text-center">';
+        echo "Average Rating: " . number_format($averageRating, 1);// Show the average rating as a number with one decimal place
+        echo '</div>'; 
         
         // Add a link to the reviews page
-        echo '<a href="leavereview.php?ProductCode=' . $productCode . '"class="btn btn-success">See All Reviews</a>';
-    }
+        echo '<div class="row">';
+        echo '<div class="col text-center">';
+        echo '<a href="leavereview.php?ProductCode=' . $productCode . '" class="btn btn-success btn-block">Leave a Review</a>';
+        echo '</div>';
+        echo '</div>';
+        }
 }
 function displayAllReviewsForProduct($productCode) {
     $reviews = getReviewsForProduct($productCode);

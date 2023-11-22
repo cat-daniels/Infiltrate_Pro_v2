@@ -14,14 +14,13 @@ include_once("../Functions/accountfunctions.php");
 
 <?php
 if (isset($_GET['uid'])) {
-    $user = $_GET['uid'];
-    editUser($user);
-    echo '<div class = "gap"></div>';
-} else {
-    echo "User ID not found in the URL or handle the error here.";
-   
-    exit();
-}
+    $uid = $_GET['uid'];
+    if (Checkaccesslevel() == 2) { 
+        deleteUser($uid);
+    } else {
+        header("Location: ../Pages/homepage.php"); // Redirect if the access level is not 2 (Admin)
+        exit();
+    }}
 ?>
 
 </body>

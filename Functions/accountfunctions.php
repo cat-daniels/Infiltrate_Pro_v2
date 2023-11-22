@@ -5,8 +5,6 @@ ini_set('display_errors', 1);
 include_once("../Utils/database.php");
 include_once("../Utils/sessionconfig.php");
 
-//user account access level = 1
-//admin account access level = 2
 function getUsers(){
 
     $conn = connectdb();
@@ -70,6 +68,7 @@ function displayUsers($userArray) {
         echo '<th>Card Holder</th>';
         echo '<th>Expiration Date</th>';
         echo '<th>CVV</th>';
+        echo '<th>Edit</th>';
         echo '</tr>';
         echo '</thead>';
         echo '<tbody>';
@@ -85,6 +84,7 @@ function displayUsers($userArray) {
             echo "<td>{$user['card_holder']}</td>";
             echo "<td>{$user['expiration_date']}</td>";
             echo "<td>{$user['cvv']}</td>";
+            echo "<td><a href='../UserPages/editAccount.php?uid={$user['uid']}' class='btn btn-info'>View</a></td>";
             echo "</tr>";
         }
     
@@ -119,8 +119,7 @@ function displayUsers($userArray) {
                 echo "<td>{$user['expiration_date']}</td>";
                 echo "<td>{$user['cvv']}</td>";
                 echo "<td><a href='editAccount.php?uid={$user['uid']}' class='btn btn-info'>View</a></td>";
-                echo "<td><a href='#' class='btn btn-danger'>delete</a></td>";        
-                echo "</tr>";
+                echo "<td><a href='deleteAccount.php?uid={$user['uid']}' class='btn btn-Danger'>Delete</a></td>";                echo "</tr>";
             }
         
             echo '</tbody>';
@@ -130,10 +129,10 @@ function displayUsers($userArray) {
     
 }
 
-function editUser($uid){
-    $conn = connctdb();
+function editUser($uid) {
+    $conn = connectdb();
 
-    $sql = "SELECT * FROM products WHERE uid=?";
+    $sql = "SELECT * FROM users WHERE uid=?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {
@@ -152,113 +151,189 @@ function editUser($uid){
         die("Error: Unable to execute the SQL statement");
     }
 
-    $userData = $stmt->get_result()->fetch_assoc();
+    $result = $stmt->get_result();
+    $userData = $result->fetch_assoc();
 
     if (!$userData) {
-        die("Error: Product not found");
+        die("Error: User not found");
     }
 
-    // uid	fname lname	email password address	card_number	card_holder	
-// expiration_date	cvv	isAdmin	session_token
-    echo'
-    <!-- Form for editing product details -->
+    $stmt->close(); 
+    $conn->close();
+    
+    editform($userData);
+}
+
+function editform($userData){
+    echo '
+    <!-- Form for editing user details -->
     <form id="editUserForm" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="fname">First Name</label>
-            <input type="text" class="form-control" id="fname" name="fname" value="' . $usertData['fname'] . '" required>
+            <input type="text" class="form-control" id="fname" name="fname" value="' . $userData['fname'] . '" required>
         </div>
-
         <div class="form-group">
             <label for="lname">Last Name</label>
-            <input type="text" class="form-control" id="lname" name="lname" value="' . $usertData['lname'] . '" required>
+            <input type="text" class="form-control" id="lname" name="lname" value="' . $userData['lname'] . '" required>
         </div>
-
         <div class="form-group">
              <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" value="' . $usertData['email'] . '" required>
+            <input type="text" class="form-control" id="email" name="email" value="' . $userData['email'] . '" required>
         </div>
-
         <div class="form-group">
              <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" value="' . $usertData['address'] . '" required>
+            <input type="text" class="form-control" id="address" name="address" value="' . $userData['address'] . '" required>
         </div>
-
         <div class="form-group">
-        <label for="card_number">Card Number</label>
-       <input type="text" class="form-control" id="card_number" name="card_number" value="' . $usertData['card_number'] . '" required>
-   </div>
-
-   <div class="form-group">
-        <label for="card_Holder">Card Holder</label>
-       <input type="text" class="form-control" id="card_Holder" name="card_Holder" value="' . $usertData['card_Holder'] . '" required>
-   </div>
-
-      <div class="form-group">
-        <label for="expiration_date">Expiryr</label>
-       <input type="text" class="form-control" id="expiration_date" name="expiration_date" value="' . $usertData['expiration_date'] . '" required>
-   </div>
-
-   <div class="form-group">
-   <label for="cvv">CVV</label>
-  <input type="text" class="form-control" id="expiration_date" name="expiration_date" value="' . $usertData['cvv'] . '" required>
-</div>
-
-<div class="form-group">
-<label for="isAdmin">Is the user an Admin</label>
-<select class="form-control" id="isAdmin" name="isAdmin" required>
-    <option value="1" ' . ($userData['isAdmin'] == 1 ? 'selected' : '') . '>Yes</option>
-    <option value="0" ' . ($userData['isAdmin'] == 0 ? 'selected' : '') . '>No</option>
-</select>
-</div>
-
-<input type="hidden" name="userData" value="' . $userData . '">
-<button type="submit" class="btn btn-success" name="updateUser">Update User</button>
-</form>';
+            <label for="card_number">Card Number</label>
+            <input type="text" class="form-control" id="card_number" name="card_number" value="' . $userData['card_number'] . '" required>
+        </div>
+        <div class="form-group">
+            <label for="card_holder">Card Holder</label>
+            <input type="text" class="form-control" id="card_holder" name="card_holder" value="' . $userData['card_holder'] . '">
+        </div>
+        <div class="form-group">
+            <label for="expiration_date">Expiration Date</label>
+            <input type="text" class="form-control" id="expiration_date" name="expiration_date" value="' . $userData['expiration_date'] . '" required>
+        </div>
+        <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" class="form-control" id="cvv" name="cvv" value="' . $userData['cvv'] . '">
+        </div>';
         
-        $stmt->close();
-        $conn->close();
-        
+        $adminLevel = CheckaccessLevel();
+
+if ($adminLevel == 2) {
+    echo '
+        <div class="form-group">
+            <label for="isAdmin">Is the user an Admin</label>
+            <select class="form-control" id="isAdmin" name="isAdmin" required>
+                <option value="1" ' . ($userData['isAdmin'] == 1 ? 'selected' : '') . '>Yes</option>
+                <option value="0" ' . ($userData['isAdmin'] == 0 ? 'selected' : '') . '>No</option>
+            </select>
+        </div>';
 }
 
-    // uid	fname lname	email password address	card_number	card_holder	
-// expiration_date	cvv	isAdmin	session_token
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
+
+        echo'
+        <input type="hidden" name="userData" value="' . htmlspecialchars(json_encode($userData)) . '">
+        <button type="submit" class="btn btn-success" name="updateUser">Update User</button>
+    </form>';
+        
+        
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
+        // Retrieve form data
+        $fname = $_POST["fname"];
+        $lname = $_POST["lname"];
+        $email = $_POST["email"];
+        $address = $_POST["address"];
+        $card_number = $_POST["card_number"];
+        $card_holder = $_POST["card_holder"];
+        $expiration_date = $_POST["expiration_date"];
+        $cvv = $_POST["cvv"];
+
+        $checkAccess = Checkaccesslevel();
+        if($checkAccess == 2){
+         $isAdmin = $_POST["isAdmin"];   
+        }else{
+
+            $isAdmin = "0";
+        }
+        
+        $userData = $_POST["userData"];
+    
+        
+        $userDataArray = json_decode($userData, true);
+    
+       
+        $conn = connectdb();
+    
+        
+        $sql = "UPDATE users SET fname=?, lname=?, email=?, address=?, card_number=?, card_holder=?, expiration_date=?, cvv=?, isAdmin=? WHERE uid=?";
+    
+        $stmt = $conn->prepare($sql);
+    
+        if ($stmt === false) {
+            die("Error: Unable to prepare the SQL statement");
+        }
+    
+        // Bind parameters
+        $stmt->bind_param("ssssssssis", $fname, $lname, $email, $address, $card_number, $card_holder, $expiration_date, $cvv, $isAdmin, $userDataArray['uid']);
+    
+        
+        $executeResult = $stmt->execute();
+    
+        if ($executeResult === false) {
+            die("Error: Unable to execute the SQL statement");
+        }
+    
+        echo "User details updated successfully";
+    
+        $stmt->close();
+        $conn->close();
+    }
+        
+}
+function deleteUser($uid) {
     $conn = connectdb();
 
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
-    $email = $_POST["email"];
-    $address = $_POST["address"]; 
-    $card_number = $_POST["card_number"]; 
-    $card_holder = $_POST["card_holder"];
-    $expiration_date = $_POST["exeiration_date"];
-    $cvv = $_POST["cvv"];
-    $isAdmin = $_POST["isAdmin"];
-
-    $sql .= " WHERE uid=?";
-        $bindParams[] = $uid;
-        $bindTypes .= 's';
-
+    $sql = "SELECT * FROM users WHERE uid=?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {
         die("Error: Unable to prepare the SQL statement");
     }
 
-    // Bind parameters dynamically
-    $stmt->bind_param($bindTypes, ...$bindParams);
+    $result = $stmt->bind_param("i", $uid); // Assuming uid is an integer
 
-    // Execute the statement
+    if ($result === false) {
+        die("Error: Unable to bind parameters");
+    }
+
     $executeResult = $stmt->execute();
 
     if ($executeResult === false) {
         die("Error: Unable to execute the SQL statement");
     }
 
-    echo "Product details updated successfully";
+    $userData = $stmt->get_result()->fetch_assoc();
 
-    $stmt->close();
+    if (!$userData) {
+        die("Error: User not found");
+    }
+
+    echo '<div>Are you sure you want to delete user: ' . $userData['fname'] . ' ' . $userData['lname'] . '?</div>';
+    echo '<form method="POST">
+            <input type="hidden" name="uid" value="' . $uid . '">
+            <button type="submit" name="confirmDelete">Yes, Delete</button>
+          </form>';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmDelete'])) {
+        $sql = "DELETE FROM users WHERE uid=?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Error: Unable to prepare the SQL statement");
+        }
+
+        $result = $stmt->bind_param("i", $uid);
+
+        if ($result === false) {
+            die("Error: Unable to bind parameters");
+        }
+
+        $executeResult = $stmt->execute();
+
+        if ($executeResult === false) {
+            die("Error: Unable to execute the SQL statement");
+        }
+
+        echo "User deleted successfully";
+
+        $stmt->close();
+    }
+
     $conn->close();
 }
-
 ?>

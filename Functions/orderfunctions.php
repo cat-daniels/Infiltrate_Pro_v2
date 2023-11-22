@@ -16,7 +16,7 @@ function displayOrdersBySessionUID() {
 
         if ($result->num_rows > 0) {
             echo "<h2>Orders</h2>";
-            echo "<table border='1'>";
+            echo '<table class="table table-striped">';
             echo "<tr><th>Order Number</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Payment Method</th><th>Total Amount</th><th>Action</th></tr>";
 
             while ($row = $result->fetch_assoc()) {
@@ -128,9 +128,8 @@ function displayAllOrders() {
 
     if ($result) {
         if ($result->num_rows > 0) {
-            echo "<h2>All Orders</h2>";
             echo "<table class='table table-striped'>";
-            echo "<thead class='thead-dark'><tr><th>Order Number</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Payment Method</th><th>Total Amount</th><th>Action</th></tr></thead>";
+            echo "<thead class='thead-light'><tr><th>Order Number</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Payment Method</th><th>Total Amount</th><th>Action</th></tr></thead>";
             echo "<tbody>";
 
             while ($row = $result->fetch_assoc()) {
@@ -150,12 +149,13 @@ function displayAllOrders() {
                 echo "<td>$address</td>";
                 echo "<td>$paymentMethod</td>";
                 echo "<td>$totalAmount</td>";
-                echo "<td><a href='view_orders.php?orderId=$orderId'>View More</a></td>"; 
+                echo "<td><a href='view_orders.php?orderId=$orderId' class='btn btn-info'>View More</a></td>"; 
                 echo "</tr>";
             }
 
             echo "</tbody>";
             echo "</table>";
+            echo '<div class = "gap"></div>';
         } else {
             echo "No orders found.";
         }
