@@ -170,7 +170,6 @@ function displayCategory($selectedCategory) {
     $conn->close();
 }
 
-
 //------------Admin Product Functions---------
 function getProducts(){
     $conn = connectdb();
