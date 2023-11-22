@@ -28,7 +28,7 @@ $Michael = "../images/people/download (1).jpg";
     </div>
     <div class="col">
     <h5 class="card-title">John Smith</h5>
-      <p class="card-text">As the Owner of Infiltrate Pro, John is dedicated to driving the company's growth and ensuring exceptional customer satisfaction. He leads the team with a clear vision and a passion for innovation. He is currently 31 years old and enjoys hanging out with his dog Finley</p><br>
+      <p class="card-text">As the Owner of Infiltrate Pro founded in 2022, John is dedicated to driving the company's growth and ensuring exceptional customer satisfaction. He leads the team with a clear vision and a passion for innovation.  He is currently 31 years old and enjoys hanging out with his dog Finley</p><br>
       <small class="text">Position&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Owner</small><br>
       <small class="text">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;owner@email.com</small><br>
       <small class="text">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;09 812 0001</small>

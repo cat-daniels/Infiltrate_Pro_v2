@@ -400,7 +400,7 @@ function editProd($productCode) {
         $featured = $_POST['featured'];
         $keywords = implode(", ", $_POST['keywords']);
         $categories = implode(", ", $_POST['category']);
-        // Retrieve other form fields (Image) similarly
+        
 
         $sql = "UPDATE products SET ";
         $bindParams = array();
