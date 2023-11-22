@@ -115,17 +115,61 @@ function displayCategory($selectedCategory) {
         }
     }
 
-    // Display fetched products based on the selected category
-    foreach ($products as $product) {
-        // Display each product in the selected category
-        echo "<p>Product Name: {$product['ProductName']}</p>";
-        echo "<p>Price: {$product['Price']}</p>";
-        echo "<p>Description: {$product['Description']}</p>";
-        // will add more stuff here as needed
+    if (count($products) > 0) {
+        echo '<div class="row">';
+        $productsCounter = 0;
+
+        foreach ($products as $product) {
+            if ($productsCounter % 4 === 0 && $productsCounter !== 0) {
+                echo '</div><div class="row">';
+            }
+
+            echo '<div class="col-md-3">';
+            echo '<div class="card mb-4" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 5px;">';
+            echo '<div class="image-container" style="height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">';
+            echo '<img src="' . ($product['Image'] ? '../images/' . $product['Image'] : 'placeholder_image.jpg') . '" class="card-img-top" alt="' . $product['ProductName'] . '" style="width: 80%; height: auto; object-fit: cover;">';
+            echo '</div>';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . $product['ProductName'] . '</h5>';
+            echo '<p class="card-text">Price: $' . $product['Price'] . '</p>';
+            echo '<p class="card-text">Description: ' . $product['Description'] . '</p>';
+
+           
+            echo '<div class="d-flex justify-content-between">';
+            echo '<a href="viewmore.php?ProductCode=' . $product['ProductCode'] . '" class="btn btn-primary" style="height: fit-content">View More</a>';
+
+            echo '<form method="post" action="" style="margin-left: auto; display: flex;">';
+            if (sessioncheck() == true) {
+                echo '<input type="hidden" name="productCode" value="' . $product['ProductCode'] . '">';
+                echo '<input type="hidden" name="productName" value="' . $product['ProductName'] . '">';
+                echo '<input type="hidden" name="productPrice" value="' . $product['Price'] . '">';
+                echo '<input type="hidden" name="addToCart" value="true">';
+                echo '<button type="submit" name="addToCartBtn" class="btn btn-secondary" style="width: 100%;">Add to Cart</button>';
+            } else {
+                echo '<a href="../Pages/login.php" class="btn btn-secondary" style="width: 100%;">Add to Cart</a>';
+            }
+            echo '</form>';
+            echo '</div>'; // Close d-flex
+
+            echo '<div class="product-reviews">';
+            displayReviewsForProduct($product['ProductCode']); // Display product reviews
+            echo '</div>';
+
+            echo '</div>'; // Close card-body
+            echo '</div>'; // Close card
+            echo '</div>'; // Close col-md-3
+
+            $productsCounter++;
+        }
+
+        echo '</div>'; // Close the last row if the number of products isn't a multiple of 4
+    } else {
+        echo "No products found.";
     }
 
     $conn->close();
 }
+
 
 //------------Admin Product Functions---------
 function getProducts(){

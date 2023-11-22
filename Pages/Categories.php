@@ -15,7 +15,6 @@ include_once("../Functions/productfunctions.php");
 <?php
 if (isset($_GET['category'])) {
     $selectedCategory = $_GET['category'];
-    echo $selectedCategory;
     displayCategory($selectedCategory);
 }
 
