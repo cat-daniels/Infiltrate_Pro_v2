@@ -43,7 +43,7 @@ function displayProducts() {
             }
     
             echo '<div class="col-md-3">';
-            echo '<div class="card mb-4" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 5px;">';
+            echo '<div class="card mb-5" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 5px;">';
             echo '<div class="image-container" style="height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">'; 
             echo '<img src="' . ($row['Image'] ? '../images/' . $row['Image'] : 'placeholder_image.jpg') . '" class="card-img-top" alt="' . $row['ProductName'] . '" style="width: 80%; height: auto; object-fit: cover;">'; 
             echo '</div>';          

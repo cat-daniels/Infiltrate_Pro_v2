@@ -133,9 +133,19 @@ margin: 5px;
     height: 100%; 
     object-fit: cover; 
   }
-
+  .topgap{
+    height: 20px;
+    width: 100%;
+    padding-bottom: 30px;
+  }
   .gap{
     height: 20px;
     width: 100%;
     padding-bottom: 110px;
+  }
+
+  .divider{
+    height: 20px;
+    width: 100%;
+    padding-bottom: 30px;
   }

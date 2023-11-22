@@ -27,19 +27,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="post" action="register.php">
             <div class="form-group">
                 <label for="fname">First Name</label>
-                <input type="text" class="form-control" id="fname" name="fname" required>
+                <input type="text" class="form-control" id="fname" name="fname">
             </div>
             <div class="form-group">
                 <label for="lname">Last Name</label>
-                <input type="text" class="form-control" id="lname" name="lname" required>
+                <input type="text" class="form-control" id="lname" name="lname"  >
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email"  >
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password"  >
             </div>
             <button type="submit" class="btn btn-primary" style="margin-left: 20%; padding: 10px; margin-top:5px; margin-bottom: 10px;">Register Account</button>
         </form>
