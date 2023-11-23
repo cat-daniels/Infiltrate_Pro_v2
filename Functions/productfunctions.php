@@ -657,7 +657,8 @@ function displayReviewsForProduct($productCode) {
 function displayAllReviewsForProduct($productCode) {
     $reviews = getReviewsForProduct($productCode);
     if (count($reviews) === 0) {
-        echo "Be the first to leave a review";
+        echo "<h4 style='text-align: center; background-color: steelblue; color: white; padding: 5px; border-radius: 5px;'>Be the first to leave a review</h4>";
+
     } else {
         // Calculate the average rating
         $totalRating = 0;
@@ -665,24 +666,26 @@ function displayAllReviewsForProduct($productCode) {
             $totalRating += $review['rating'];
         }
         $averageRating = $totalRating / count($reviews);
-        echo "Average Rating: " . number_format($averageRating, 1); // Show the average rating as a number with one decimal place
-        echo "<br><br>";
+        echo "<h4 style='text-align: center; background-color: steelblue; color: white; padding: 5px; border-radius: 5px;'>Average Rating: " . number_format($averageRating, 1) . "</h4>";
 
         // Display each review
         foreach ($reviews as $review) {
+            echo '<div class="review-container">';
+            echo '<div class="review" style="background-color: #f5f5f5; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">';
             echo "Rating: " . $review['rating'] . " Stars<br>";
             echo "Review: " . $review['review_text'] . "<br>";
             echo "Date: " . $review['review_date'] . "<br>";
 
             // Display small image with an anchor to enlarge
             echo '<a href="' . $review['image_path'] . '" class="fancybox" data-fancybox="review-gallery" data-caption="Review Image">';
-            echo '<img src="' . $review['image_path'] . '" alt="Review Image" style="max-width: 100px; max-height: 100px;">';
+            echo '<img src="' . $review['image_path'] . '" alt="Review Image" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
             echo '</a>';
-    
-            echo "<hr>";
-        }
+            
+            echo "</div></div>";
         }
     }
+}
+
 
 
 

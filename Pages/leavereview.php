@@ -25,6 +25,7 @@ include_once("../Functions/productfunctions.php");
 </head>
 <div class="container">
     <?php
+    topgap();
     if (isset($_GET['ProductCode'])) {
         $productCode = $_GET['ProductCode'];
       
@@ -51,18 +52,23 @@ include_once("../Functions/productfunctions.php");
                 echo '<h2>' . $row['ProductName'] . '</h2>';
                 echo '<p>Price: $' . $row['Price'] . '</p>';
                 echo '<p>Description: ' . $row['Description'] . '</p>';
-                echo '<button class="btn btn-primary">Add to Cart</button>';
+                echo '<a href="viewproducts.php" class="btn btn-primary">Back to View Products</a>';
                 divider();
-                echo '<h4>Leave a Review</h4>';
+                echo '<h4 style="
+                background-color: steelblue;
+                color: white;
+                padding: 5px;
+                text-align: center;">Leave a Review</h4>';
                 
                 // Form for submitting reviews
                 echo '<form method="post" action="processreview.php" enctype="multipart/form-data" style = "
-                    background-color: #17a2b8;
-                    padding: 5px;
+                    background-color: #adadad;
+                    padding: 10px;
                     color: white;
                     padding-left: 10px;
+                    border-radius: 8px;
                 ">';
-                echo '<label for="rating">Rating:</label>';
+                echo '<label for="rating">Rating:</label><br>';
                 echo '<select name="rating">';
                 echo '<option value="1">1 Star</option>';
                 echo '<option value="2">2 Stars</option>';
@@ -71,14 +77,21 @@ include_once("../Functions/productfunctions.php");
                 echo '<option value="5">5 Stars</option>';
                 echo '</select>';
                 echo '<br>';
-                echo '<label for="review_text">Review:</label>';
+                echo '<label for="review_text">Review:</label><br>';
                 echo '<textarea name="review_text" rows="4" cols="50" required></textarea>';
-                echo '<br>';
+                echo '<br><br>';
                 echo '<label for="review_image">Upload Image:</label>';
                 echo '<input type="file" name="review_image" id="review_image">';
                 echo '<br>';
                 echo '<input type="hidden" name="ProductCode" value="' . $productCode . '">';
-                echo '<button type="submit" class="btn btn-success"><input type="submit" name="submit" value="Submit Review" style=""></button>';
+                echo '<input type="submit" name="submit" value="Submit Review" style="
+                background-color: #28a745;
+                color: white;
+                border-block: none;
+                border: none;
+                border-radius: 8px;
+                padding: 8px;
+            ">';
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
