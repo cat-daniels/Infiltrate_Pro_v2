@@ -92,7 +92,6 @@ function displayProducts() {
         echo "No products found.";
     }
 
-    echo '<div class = "gap"></div>';
 }
 
 //------------Categories------------------------
@@ -314,48 +313,64 @@ function addProducts() {
         $price = $_POST['price'];
         $description = $_POST['description'];
         $featured = $_POST['featured'];
-        $imagePath = '../images/' . basename($_FILES['imageFile']['name']);
 
-         // Handle checkboxes for keywords
-    $selectedKeywords = $_POST['keywords'] ?? array();
-    $selectedKeywords = array_filter($selectedKeywords, function ($key) use ($keywords) {
-        return in_array($key, $keywords);
-    });
+        // Check if file was uploaded without errors
+        if (isset($_FILES['imageFile']) && $_FILES['imageFile']['error'] === UPLOAD_ERR_OK) {
+            $imageTempPath = $_FILES['imageFile']['tmp_name'];
+            $imagePath = '../images/' . basename($_FILES['imageFile']['name']);
 
-    $keywordsString = implode(", ", $selectedKeywords);
+            // Move uploaded file to the target directory
+            if (move_uploaded_file($imageTempPath, $imagePath)) {
+                // Handle checkboxes for keywords
+            $selectedKeywords = $_POST['keywords'] ?? array();
+            $selectedKeywords = array_filter($selectedKeywords, function ($key) use ($keywords) {
+                return in_array($key, $keywords);
+                 });
 
-    $selectedCategories = $_POST['categories'] ?? array();
-    $selectedCategories = array_filter($selectedCategories, function ($category) use ($categories) {
-        return in_array($category, $categories);
-    });
+            $keywordsString = implode(", ", $selectedKeywords);
 
-    $categoryString = implode(", ", $selectedCategories);
+            $selectedCategories = $_POST['categories'] ?? array();
+            $selectedCategories = array_filter($selectedCategories, function ($category) use ($categories) {
+                return in_array($category, $categories);
+                });
 
-    // Insert product information into 'products' table
-    $sql = "INSERT INTO products (ProductName, Price, Description, Keywords, Category, Featured, Image) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
+                $categoryString = implode(", ", $selectedCategories);
 
-    if ($stmt === false) {
-        die("Error: Unable to prepare the SQL statement");
+                // Insert product information into 'products' table
+                $sql = "INSERT INTO products (ProductName, Price, Description, Keywords, Category, Featured, Image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+
+                if ($stmt === false) {
+                    die("Error: Unable to prepare the SQL statement");
+                }
+
+                $result = $stmt->bind_param("sdsssis", $productName, $price, $description, $keywordsString, $categoryString, $featured, $imagePath);
+
+                if ($result === false) {
+                    die("Error: Unable to bind parameters");
+                }
+
+                $executeResult = $stmt->execute();
+
+                if ($executeResult === false) {
+                    die("Error: Unable to execute the SQL statement");
+                }
+
+                echo '<div class="alert alert-success" role="alert">
+                Product added successfully
+              </div>';
+
+                $stmt->close();
+            } else {
+                echo "Error: Failed to move the uploaded file to the destination directory";
+            }
+        } else {
+            echo "Error: No file uploaded or an error occurred during file upload";
+        }
+
+        $conn->close();
     }
-
-    $result = $stmt->bind_param("sdsssis", $productName, $price, $description, $keywordsString, $categoryString, $featured, $imagePath);
-
-    if ($result === false) {
-        die("Error: Unable to bind parameters");
-    }
-
-    $executeResult = $stmt->execute();
-
-    if ($executeResult === false) {
-        die("Error: Unable to execute the SQL statement");
-    }
-
-    echo "Product added successfully";
-
-    $stmt->close();
-    $conn->close();
-}}
+}
 
 function editProd($productCode) {
     $conn = connectdb();
@@ -525,7 +540,9 @@ function editProd($productCode) {
             die("Error: Unable to execute the SQL statement");
         }
 
-        echo "Product details updated successfully";
+        echo '<div class="alert alert-success" role="alert">
+                Product edited successfully
+              </div>';
 
         $stmt->close();
         $conn->close();

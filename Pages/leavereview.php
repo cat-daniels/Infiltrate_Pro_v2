@@ -5,7 +5,7 @@ include_once("../Utils/database.php");
 include_once("../Utils/sessionconfig.php");
 //functions
 include_once("../Functions/authfunctions.php");
-
+include_once("../Components/items.php");
 displayNavbar();
 
 include_once("../Functions/productfunctions.php");
@@ -23,30 +23,27 @@ include_once("../Functions/productfunctions.php");
         });
     </script>
 </head>
-<?php
-if (isset($_GET['ProductCode'])) {
-    $productCode = $_GET['ProductCode'];
-  
-    $conn = connectdb();
-    $sql = 'SELECT * FROM products WHERE ProductCode = ?';
-    $stmt = $conn->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param("s", $productCode);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result) {
-            if ($result->num_rows > 0) {
+<div class="container">
+    <?php
+    if (isset($_GET['ProductCode'])) {
+        $productCode = $_GET['ProductCode'];
+      
+        $conn = connectdb();
+        $sql = 'SELECT * FROM products WHERE ProductCode = ?';
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param("s", $productCode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                
-                echo '<div class="container">';
+
                 echo '<div class="row">';
                 echo '<div class="col-md-6">';
                 echo '<div class="product-image">';
-                echo '<img src="' . $row['Image'] . '" alt="' . $row['ProductName'] . '">';
+                echo '<img src="' . $row['Image'] . '" alt="' . $row['ProductName'] . '" class="img-fluid">';
                 echo '<div class="small-images">';
                 echo '</div>';
-                echo '<button class="btn btn-primary" >Add to Cart</button>';
-                echo '<button class="btn btn-secondary">See Reviews</button>';
                 echo '</div>';
                 echo '</div>';
                 echo '<div class="col-md-6">';
@@ -54,51 +51,59 @@ if (isset($_GET['ProductCode'])) {
                 echo '<h2>' . $row['ProductName'] . '</h2>';
                 echo '<p>Price: $' . $row['Price'] . '</p>';
                 echo '<p>Description: ' . $row['Description'] . '</p>';
-                // Display more details here
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
+                echo '<button class="btn btn-primary">Add to Cart</button>';
+                divider();
+                echo '<h4>Leave a Review</h4>';
                 
-                displayAllReviewsForProduct($productCode);
+                // Form for submitting reviews
+                echo '<form method="post" action="processreview.php" enctype="multipart/form-data" style = "
+                    background-color: #17a2b8;
+                    padding: 5px;
+                    color: white;
+                    padding-left: 10px;
+                ">';
+                echo '<label for="rating">Rating:</label>';
+                echo '<select name="rating">';
+                echo '<option value="1">1 Star</option>';
+                echo '<option value="2">2 Stars</option>';
+                echo '<option value="3">3 Stars</option>';
+                echo '<option value="4">4 Stars</option>';
+                echo '<option value="5">5 Stars</option>';
+                echo '</select>';
+                echo '<br>';
+                echo '<label for="review_text">Review:</label>';
+                echo '<textarea name="review_text" rows="4" cols="50" required></textarea>';
+                echo '<br>';
+                echo '<label for="review_image">Upload Image:</label>';
+                echo '<input type="file" name="review_image" id="review_image">';
+                echo '<br>';
+                echo '<input type="hidden" name="ProductCode" value="' . $productCode . '">';
+                echo '<button type="submit" class="btn btn-success"><input type="submit" name="submit" value="Submit Review" style=""></button>';
+                echo '</form>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+
             } else {
-                echo "Product not found.";
+                echo "<div class='alert alert-danger' role='alert'>Product not found.</div>";
             }
+
+            $stmt->close();
         } else {
-            echo "Error: " . $conn->error;
+            echo "<div class='alert alert-danger' role='alert'>Error in prepared statement: " . $conn->error . "</div>";
         }
-        $stmt->close();
+        $conn->close();
     } else {
-        echo "Error in prepared statement: " . $conn->error;
+        echo "<div class='alert alert-warning' role='alert'>Product Code not provided.</div>";
     }
-    $conn->close();
-} else {
-    echo "Product Code not provided.";
-}
-?>
-<form method="post" action="processreview.php"enctype="multipart/form-data">
-    <label for="rating">Rating:</label>
-    <select name="rating">
-        <option value="1">1 Star</option>
-        <option value="2">2 Stars</option>
-        <option value="3">3 Stars</option>
-        <option value="4">4 Stars</option>
-        <option value="5">5 Stars</option>
-    </select>
-    <br>
-    <label for="review_text">Review:</label>
-    <textarea name="review_text" rows="4" cols="50" required></textarea>
-    <br>
-    <label for="review_image">Upload Image:</label>
-    <input type="file" name="review_image" id="review_image">
-    <br>
-    <input type="hidden" name="ProductCode" value="<?php echo $_GET['ProductCode']; ?>">
-    <input type="submit" name="submit" value="Submit Review">
-</form>
+    ?>
+    
+    <?php
+    echo "<br>";
+    displayAllReviewsForProduct($productCode);
+    echo "<div class='gap'></div>";
+    ?>
+</div>
 </body>
-<?php
-echo "<br>";
-echo '<a href="viewmore.php?ProductCode=' . $productCode . '"class="btn btn-success">go back</a>';
-echo "<div class='gap'></div>";
-?>
 <?php include_once("../Components/footer.php"); ?>
 </html>
