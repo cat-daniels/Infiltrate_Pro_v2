@@ -15,8 +15,8 @@ function displayOrdersBySessionUID() {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            echo "<h2>Orders</h2>";
-            echo '<table class="table table-striped">';
+            echo '<table class="table table-striped" style= "text-align: center;">';
+            echo '<h5 style = "text-align: center;">Here are your orders</h5>';
             echo "<tr><th>Order Number</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Payment Method</th><th>Total Amount</th><th>Action</th></tr>";
 
             while ($row = $result->fetch_assoc()) {
@@ -36,7 +36,7 @@ function displayOrdersBySessionUID() {
                 echo "<td>$address</td>";
                 echo "<td>$paymentMethod</td>";
                 echo "<td>$totalAmount</td>";
-                echo "<td><a href='view_orders.php?orderId=$orderId'>View More</a></td>"; 
+                echo "<td><a href='view_orders.php?orderId=$orderId' class='btn btn-info'>View More</a></td>"; 
                 echo "</tr>";
             }
 
@@ -66,17 +66,18 @@ function displayOrderDetails($orderId) {
     if ($result->num_rows > 0) {
         $order = $result->fetch_assoc();
         // Display order details
+        echo '<div class="order-card">';
         echo "<h2>Order Details</h2>";
-        echo "<p>Order Number: " . $order['orderNumber'] . "</p>";
-        echo "<p>First Name: " . $order['firstName'] . "</p>";
-        echo "<p>Last Name: " . $order['lastName'] . "</p>";
-        echo "<p>Email: " . $order['email'] . "</p>";
-        echo "<p>Address: " . $order['address'] . "</p>";
-        echo "<p>Country: " . $order['country'] . "</p>";
-        echo "<p>Post Code: " . $order['postCode'] . "</p>";
-        echo "<p>Phone Number: " . $order['phoneNumber'] . "</p>";
-        echo "<p>Payment Method: " . $order['paymentMethod'] . "</p>";
-        echo "<p>Total Amount: $" . $order['totalAmount'] . "</p>";
+        echo " Order Number: " . $order['orderNumber'] . " <br>";
+        echo " First Name: " . $order['firstName'] . " <br>";
+        echo " Last Name: " . $order['lastName'] . " <br>";
+        echo " Email: " . $order['email'] . " <br>";
+        echo " Address: " . $order['address'] . " <br>";
+        echo " Country: " . $order['country'] . " <br>";
+        echo " Post Code: " . $order['postCode'] . " <br>";
+        echo " Phone Number: " . $order['phoneNumber'] . " <br>";
+        echo " Payment Method: " . $order['paymentMethod'] . " <br>";
+        echo " Total Amount: $" . $order['totalAmount'] . " ";
 
         // Display order items
         $orderItems = $order['orderDetails']; 
@@ -106,6 +107,7 @@ function displayOrderDetails($orderId) {
             }
         }
         echo "</table>";
+        echo "</div>"; // close order card
         echo "<br>";
         echo "<a href='manageOrders.php'><button class='btn btn-success my-2 my-sm-0' id='NavButton'>Back to Orders</button></a>";
         echo "<br>";

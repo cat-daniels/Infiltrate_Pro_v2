@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" href="style/animationstyle.css">
+    <style>
+        body {
+            background-image: url('images/lense3.png');
+    background-size: cover; 
+    background-position: center;         }
+    </style>
 </head>
 <body>
-  
+
     <div class="homepage">
         <div class="center-content">
-            <h2>Infiltrate <span style="color: #6DC2FA;">Pro</span></h2> <!-- Added closing </span> tag here -->
+            <h2>Infiltrate <span style="color: #6DC2FA;">Pro</span></h2>
             <div class="center-button">
                 <h4>This tool is to be used for learning purposes only</h4>
                 <h4>Click below to begin</h4> 

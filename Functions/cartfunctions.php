@@ -170,7 +170,7 @@ function displayCart() {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $cartContent = '<table>';
+            $cartContent = '<table class="table table-striped" style = "text-align: center;">';
             $cartContent .= '<tr><th>Product Code</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Total Price</th><th>Action</th></tr>';
 
             while ($row = $result->fetch_assoc()) {
@@ -185,8 +185,7 @@ function displayCart() {
                 $cartContent .= "<td>{$row['price']}</td>";
                 $cartContent .= "<td>{$row['totalPrice']}</td>";
                 $cartContent .= "<td>";
-                $cartContent .= "<a href='?action=remove&userID={$userID}&productCode={$row['productCode']}'>Remove</a>";
-                $cartContent .= "</td>";
+                $cartContent .= "<a href='?action=remove&userID={$userID}&productCode={$row['productCode']}' class='btn btn-danger'>Remove</a>";                $cartContent .= "</td>";
                 $cartContent .= "</tr>";
             }
 
@@ -199,7 +198,7 @@ function displayCart() {
                     $productCode = $_GET['productCode'];
                     $newQuantity = $_GET['newQuantity'];
                     updateCartItem($userID, $productCode, $newQuantity);
-                    header("Location: cart.php");
+                    echo '<meta http-equiv="refresh" content="0;url=cart.php">';
                     exit;
                  }
             }

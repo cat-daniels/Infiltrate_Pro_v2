@@ -18,6 +18,7 @@ function displayBanner() {
 function displaySearchBar() {
     echo '<div class="searchbox" style = "background-color: tan; padding: 2px;">';
     echo '<div class="d-flex flex-column align-items-center mt-4">';
+    echo '<div style = "color: white;"><h6>Search latest products and sales!</h6></div>';
     echo '<form action="" method="POST">'; // Opening form tag
     echo '<div class="input-group rounded-pill shadow-sm" style="max-width: 400px;">';
     echo '<input class="form-control rounded-pill border-0" type="search" placeholder="Search" aria-label="Search" name="query">';

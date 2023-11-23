@@ -147,7 +147,6 @@ body {
 }
 
 .boxes {
-    background: linear-gradient(to top,  #0f2556 0%, #1f53c3 50%,#0f2556 100%);
     width: 100%;
     height: 100vh;
 }

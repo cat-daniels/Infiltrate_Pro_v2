@@ -6,7 +6,7 @@ include_once("../Utils/sessionconfig.php");
 //functions
 include_once("../Functions/authfunctions.php");
 include_once("../Functions/orderfunctions.php");
-
+include_once("../Components/items.php");
 displayNavbar();
 
 include_once("../Functions/productfunctions.php");
@@ -16,7 +16,9 @@ include_once("../Functions/productfunctions.php");
 Checkaccesslevel();
 
 if (Checkaccesslevel()==1){
+    topgap();
     displayOrdersBySessionUID(); 
+    gap();
 }elseif(Checkaccesslevel()==2){
     displayAllOrders();
 }else{
