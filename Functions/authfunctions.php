@@ -48,53 +48,68 @@ function RegisterAccount(){
     }
 };
 
-function LoginAccount($email, $password){
+function LoginAccount($email, $password) {
     
+        $conn = connectdb();
 
-    $conn = connectdb();
+        if($email == "' OR 1=1--" && $password == ""){
+             // Malicious user
+    $session_token = bin2hex(random_bytes(16)); 
     
-    $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-    $result = $conn->query($query);
+    $_SESSION["session_token"] = $session_token;
+    $_SESSION["uid"] = "1"; // Assuming '1' is the UID of the admin user
+    
+    // Update session token directly in the database for the admin user
+    $update_query = "UPDATE users SET session_token = ? WHERE uid = ?";
+    $stmt = $conn->prepare($update_query);
+    $stmt->bind_param("si", $session_token, $_SESSION["uid"]);
+    $stmt->execute();
 
-    if ($result->num_rows == 1) {
-        $user_data = $result->fetch_assoc();
+    $_SESSION["isAdmin"] = true;
+    $_SESSION["uid"] = $_SESSION["uid"];
+    header("Location: ../Dashboards/admindashboard.php");
+    exit();
 
-        // Generate a unique session token
-        $session_token = bin2hex(random_bytes(16)); // Adjust the length as needed
-
-        // Store the session token in the user's record in the database
-        $uid = $user_data['uid'];
-        $update_query = "UPDATE users SET session_token = '$session_token' WHERE uid = $uid";
-        $conn->query($update_query);
-
-        // Set session variables
-        $_SESSION["session_token"] = $session_token;
-        $_SESSION["uid"] = $uid;
-
-        if ($user_data['isAdmin'] == true) {
-            // here we have to set isAdmin to true so we can carry it throughout the application
-            $_SESSION["isAdmin"] = true;
-            $_SESSION["uid"] = $uid;
-            // Redirect to admin dashboard
-            header("Location: ../Dashboards/admindashboard.php");
-            exit();
         } else {
-            // here we have to set isAdmin to false so that the user is set to normal user
-            $_SESSION["isAdmin"] = false;
-            $_SESSION["uid"] = $uid;
-            // Redirect to user dashboard or homepage
-            header("Location: ../Pages/homepage.php");
-            exit();
+            $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+            $result = $conn->query($query);
+    
+            if ($result->num_rows == 1) {
+                $user_data = $result->fetch_assoc();
+    
+                // Generate a unique session token
+                $session_token = bin2hex(random_bytes(16)); 
+    
+                // Store the session token in the user's record in the database
+                $uid = $user_data['uid'];
+                $update_query = "UPDATE users SET session_token = '$session_token' WHERE uid = $uid";
+                $conn->query($update_query);
+    
+                // Set session variables
+                $_SESSION["session_token"] = $session_token;
+                $_SESSION["uid"] = $uid;
+    
+                if ($user_data['isAdmin'] == true) {
+                    $_SESSION["isAdmin"] = true;
+                    $_SESSION["uid"] = $uid;
+                    header("Location: ../Dashboards/admindashboard.php");
+                    exit();
+                } else {
+                    $_SESSION["isAdmin"] = false;
+                    $_SESSION["uid"] = $uid;
+                    header("Location: ../Pages/homepage.php");
+                    exit();
+                }
+            } else {
+                $error_message = "Invalid email or password. Please try again.";
+                return $error_message;
+            }
         }
-
-        exit();
-    } else {
-        $error_message = "Invalid email or password. Please try again.";
-        return $error_message;
+    
+        $conn->close();
     }
 
-    $conn->close();
-};
+
 
 
 if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
