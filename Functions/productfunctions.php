@@ -650,16 +650,24 @@ function displayAllReviewsForProduct($productCode) {
         $averageRating = $totalRating / count($reviews);
         echo "Average Rating: " . number_format($averageRating, 1); // Show the average rating as a number with one decimal place
         echo "<br><br>";
-       
-        //display each review
+
+        // Display each review
         foreach ($reviews as $review) {
             echo "Rating: " . $review['rating'] . " Stars<br>";
             echo "Review: " . $review['review_text'] . "<br>";
             echo "Date: " . $review['review_date'] . "<br>";
+
+            // Display small image with an anchor to enlarge
+            echo '<a href="' . $review['image_path'] . '" class="fancybox" data-fancybox="review-gallery" data-caption="Review Image">';
+            echo '<img src="' . $review['image_path'] . '" alt="Review Image" style="max-width: 100px; max-height: 100px;">';
+            echo '</a>';
+    
             echo "<hr>";
         }
+        }
     }
-}
+
+
 
 
 ?>

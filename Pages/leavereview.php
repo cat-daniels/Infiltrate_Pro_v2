@@ -11,7 +11,18 @@ displayNavbar();
 include_once("../Functions/productfunctions.php");
 ?>
 <body>
+<head>
+    <!--This is for the zoomy box when you click on a picture might put in header idk-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.fancybox').fancybox();
+        });
+    </script>
+</head>
 <?php
 if (isset($_GET['ProductCode'])) {
     $productCode = $_GET['ProductCode'];
@@ -64,7 +75,7 @@ if (isset($_GET['ProductCode'])) {
     echo "Product Code not provided.";
 }
 ?>
-<form method="post" action="processreview.php">
+<form method="post" action="processreview.php"enctype="multipart/form-data">
     <label for="rating">Rating:</label>
     <select name="rating">
         <option value="1">1 Star</option>
@@ -76,6 +87,9 @@ if (isset($_GET['ProductCode'])) {
     <br>
     <label for="review_text">Review:</label>
     <textarea name="review_text" rows="4" cols="50" required></textarea>
+    <br>
+    <label for="review_image">Upload Image:</label>
+    <input type="file" name="review_image" id="review_image">
     <br>
     <input type="hidden" name="ProductCode" value="<?php echo $_GET['ProductCode']; ?>">
     <input type="submit" name="submit" value="Submit Review">
