@@ -18,14 +18,13 @@
         <a href="../Pages/homepage.php"><button class="btn btn-success my-2 my-sm-0" id="NavButton">Back to Infiltrate pro</button></a>
       </li>
       <li class="nav-item">
-        <a href="#"><button class="btn btn-primary my-2 my-sm-0" id="NavButton">Help</button></a>
+        <a href="../Pages/helpdashboard.php"><button class="btn btn-primary my-2 my-sm-0" id="NavButton">Help</button></a>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary my-2 my-sm-0" id="NavButton">Mitigations</button>
-        <!-- Add dropdown here -->
+      <a href="../Pages/mitigations.php"><button class="btn btn-primary my-2 my-sm-0" id="NavButton">Mitigations</button></a>
       </li>
       <li class="nav-item">
-        <button class="btn btn-primary my-2 my-sm-0" id="NavButton">Hints on Hacks</button>
+      <a href="../Pages/hints_hacks.php"><button class="btn btn-primary my-2 my-sm-0" id="NavButton">Hints on Hacks</button></a>
       </li>
     </ul>
 </nav>
