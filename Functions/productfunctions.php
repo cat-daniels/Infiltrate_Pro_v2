@@ -54,7 +54,7 @@ function displayProducts() {
 
             // View More and Add to Cart buttons aligned horizontally
             echo '<div class="d-flex justify-content-between">';
-            echo '<a href="viewmore.php?ProductCode=' . $row['ProductCode'] . '" class="btn btn-primary" style="
+            echo '<a href="leavereview.php?ProductCode=' . $row['ProductCode'] . '" class="btn btn-primary" style="
             height: fit-content">View More</a>';
     
             echo '<form method="post" action="" style="margin-left: auto; display: flex;">'; // Apply flexbox style for form alignment
