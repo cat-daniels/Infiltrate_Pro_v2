@@ -2,10 +2,10 @@
 
 function connectdb(){
     // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $db_password = "";
-    $dbname = "infiltratepro"; 
+    $servername = "sql311.infinityfree.com";
+    $username = "if0_35475640";
+    $db_password = "DcuRuaDQI9XO";
+    $dbname = "if0_35475640_infiltratepro"; 
 
     $conn = new mysqli($servername, $username, $db_password, $dbname);
 
