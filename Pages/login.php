@@ -2,7 +2,8 @@
 <?php 
 include_once("../Public/header.php");
 include_once("../Components/nav.php");
-
+include_once("../Components/items.php");
+gap();
 //Functions
 
 include_once("../Functions/authfunctions.php");

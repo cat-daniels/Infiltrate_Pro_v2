@@ -303,11 +303,16 @@ function deleteUser($uid) {
         die("Error: User not found");
     }
 
-    echo '<div>Are you sure you want to delete user: ' . $userData['fname'] . ' ' . $userData['lname'] . '?</div>';
-    echo '<form method="POST">
-            <input type="hidden" name="uid" value="' . $uid . '">
-            <button type="submit" name="confirmDelete">Yes, Delete</button>
-          </form>';
+    echo '
+    <div class="card">
+        <div class="card-body">
+            <div>Are you sure you want to delete user: ' . $userData['fname'] . ' ' . $userData['lname'] . '?</div>;
+            <form method="POST">
+                <input type="hidden" name="uid" value="' . $uid . '">
+                <button type="submit" name="confirmDelete" class="btn btn-danger">Yes, Delete</button>
+            </form>
+        </div>
+    </div>';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmDelete'])) {
         $sql = "DELETE FROM users WHERE uid=?";

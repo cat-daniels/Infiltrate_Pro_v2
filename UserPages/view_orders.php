@@ -18,7 +18,6 @@ if (isset($_GET['orderId'])) {
     $orderId = $_GET['orderId'];
 if (Checkaccesslevel()==1){
     displayOrderDetails($orderId);
-   echo "logged in as user showing orders user"; 
 }elseif(Checkaccesslevel()==2){
     displayOrderDetails($orderId);
 }else{

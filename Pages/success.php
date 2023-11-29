@@ -17,7 +17,14 @@ include_once("../Functions/orderfunctions.php");
 
 ?>
 <body>
-    thank you for ordering! will put success message here.
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <p>Thank you for ordering! Your order has been processed!</p>
+      <p>your order will now show in the orders Tab call us if you have any issues</p>
+    </div>
+  </div>
+</div>
 </body>
 <?php include_once("../Components/footer.php"); ?>
 </html>
